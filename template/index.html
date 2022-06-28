@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#fff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Fashion recommender</title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendors/mdi/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendors/css/vendor.bundle.base.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/owl-carousel-2/owl.carousel.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='scss/components/mixins/_animation.scss') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/owl-carousel-2/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/fontawesome/css/all.css') }}">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/updated.css') }}">
+
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/logo small.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static',filename='images/logo ios.png') }}">
+    <link rel="manifest" href="{{ url_for('static',filename='manifest.json') }}">
+</head>
+
+<body>
+    <div class='loader-background'>
+        <div class="spinner-border loader" role="status">
+        </div>
+        <span class='loading-span'>
+            <span>Processing...</span>
+            <p>This can take a few seconds</p>
+        </span>
+    </div>
+
+    <div class="modal fade" id="cookiesBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="cookiesdropLabel" aria-hidden="true"  data-keyboard="false">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="cookiesdropLabel">Privacy</h4>
+                </div>
+                <div class="modal-body">
+                    <p>We use functional cookies and similar technologies that are necessary to operate this website. We don't use any third party cookies so your data stays protected. <i>All image rights reserved to the linked stores</i></p>
+                    <div class="accordion" id="accordion" role="tablist">
+                        <div class="card">
+                          <a onclick="document.getElementById('accordion-item-1-header-arrow').classList.toggle('accordion-header-arrow-flip')" data-bs-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3" class="card-header accordion-header justify-content-between" role="tab" id="heading-3">
+                            <h6 class="mb-0">
+                              Functional cookies 
+                            </h6>
+                            <i class="fa-solid fa-chevron-down" id="accordion-item-1-header-arrow"></i>
+                          </a>
+                          <div id="collapse-3" class="collapse" role="tabpanel" aria-labelledby="heading-3" data-bs-parent="#accordion">
+                            <div class="card-body"> 
+                                <p>We use Local Storage to run this website. In the Local Storage we save your unique id that will be made when you agree to our privacy policy (this and the above text). We also save here if you have agreed to the terms. Local Storage is saved on your device, NOT on the server.</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                            <a onclick="document.getElementById('accordion-item-2-header-arrow').classList.toggle('accordion-header-arrow-flip')" data-bs-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapseTwo" class="card-header accordion-header justify-content-between" role="tab" id="heading-2">
+                              <h6 class="mb-0">
+                                Your saved data 
+                              </h6>
+                              <i class="fa-solid fa-chevron-down" id="accordion-item-2-header-arrow"></i>
+                            </a>
+                            <div id="collapse-2" class="collapse" role="tabpanel" aria-labelledby="heading-2" data-bs-parent="#accordion">
+                                <div class="card-body"> 
+                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (article number, article link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal" onclick="UserAgreed()">Agree</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="privacyBackdrop" data-bs-backdrop="privacy" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="privacydropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="privacydropLabel">Privacy</h4>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p>We use functional cookies and similar technologies that are necessary to operate this website. We don't use any third party cookies so your data stays protected. <i>All image rights reserved to the linked stores</i></p>
+                    <div class="accordion" id="accordion-privacy" role="tablist">
+                        <div class="card">
+                          <a onclick="document.getElementById('accordion-privacy-item-1-header-arrow').classList.toggle('accordion-header-arrow-flip')" data-bs-toggle="collapse" href="#collapse-privacy-3" aria-expanded="false" aria-controls="collapse-privacy-3" class="card-header accordion-header justify-content-between" role="tab" id="heading-privacy-3">
+                            <h6 class="mb-0">
+                              Functional cookies 
+                            </h6>
+                            <i class="fa-solid fa-chevron-down" id="accordion-privacy-item-1-header-arrow"></i>
+                          </a>
+                          <div id="collapse-privacy-3" class="collapse" role="tabpanel" aria-labelledby="heading-privacy-3" data-bs-parent="#accordion-privacy">
+                            <div class="card-body"> 
+                                <p>We use Local Storage to run this website. In the Local Storage we save your unique id that will be made when you agree to our privacy policy (this and the above text). We also save here if you have agreed to the terms. Local Storage is saved on your device, NOT on the server.</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                            <a onclick="document.getElementById('accordion-privacy-item-2-header-arrow').classList.toggle('accordion-header-arrow-flip')" data-bs-toggle="collapse" href="#collapse-privacy-2" aria-expanded="false" aria-controls="collapseTwo" class="card-header accordion-header justify-content-between" role="tab" id="heading-privacy-2">
+                              <h6 class="mb-0">
+                                Your saved data 
+                              </h6>
+                              <i class="fa-solid fa-chevron-down" id="accordion-privacy-item-2-header-arrow"></i>
+                            </a>
+                            <div id="collapse-privacy-2" class="collapse" role="tabpanel" aria-labelledby="heading-privacy-2" data-bs-parent="#accordion-privacy">
+                                <div class="card-body"> 
+                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (article number, article link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="contactBackdrop" data-bs-backdrop="contact" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="contactdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="contactdropLabel">Contact</h4>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p>If you like to contact us, you can with the following channels:</p>
+                    <p><strong>Email: </strong>yarne.gooris@gmail.com</p>
+                    <p><strong>Twitter: </strong>@FRecommender</p>
+                    <p><strong>Instagram: </strong>@FRecommender</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img class="logo-header-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p>This programm is an AI-model which is trained to recommend you clothes based on the style and
+                        similarities of your given input.</p>
+                    <p>There are 3 ways to give your input to the programm (plus the gender choose). After you choosed
+                        an input, the programm will process your input. This can take a few seconds.</p>
+                    <p><strong>Your own image: </strong>use your own image of a clothing piece (the image will be saved!). We recommend to use a white or natural background and <strong class="modal-text-danger">NEVER UPLOAD AN IMAGE WHERE THERE IS A PERSON IN</strong>.</p>
+                    <p><strong>With an article number: </strong>give the article number of your clothing piece. This is
+                        only available for a few stores.</p>
+                    <p><strong>With a link: </strong>use the link of a article from a online shop. This is only
+                        available for a few stores.</p>
+                    <p>The results consists of 10 clothing pieces of various online stores. You can see the picture of
+                        the product and when available, an image of a model wearing the product. You can also click on
+                        the result to see the product on the stores website (when available).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Understood!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="uploadBackdrop" data-bs-backdrop="upload" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="uploadBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadBackdropLabel">Upload image</h5>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Your own image: </strong>use your own image of a clothing piece (the image will not be
+                        saved!). We recommend to use a white or natural background and <strong class="modal-text-danger">NEVER UPLOAD AN IMAGE WHERE THERE IS A PERSON IN</strong>.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="img-example-column">
+                                <i class="fa-solid fa-circle-xmark img-example-icon img-example-icon-wrong"></i>
+                                <img src="{{ url_for('static', filename='images/examples/model.jpg') }}" alt="Model example">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="img-example-column">
+                                <i class="fa-solid fa-circle-check img-example-icon img-example-icon-correct"></i>
+                                <img src="{{ url_for('static', filename='images/examples/product.jpg') }}" alt="Product example">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Understood!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="numberBackdrop" data-bs-backdrop="number" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="numberBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="numberBackdropLabel">Article number</h5>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p><strong>With an article number: </strong>give the article number of your clothing piece. This is
+                        only available for the following stores:</p>
+                    <div class="row justify-content-sm-left">
+                        <ul>
+                            <li><a target="_blank" href="https://www.hm.com/">H&M</a></li>
+                            <li><a target="_blank" href="www.zara.com">Zara</a></li>
+                            <li><a target="_blank" href="https://www.bershka.com">Bershka</a></li>
+                            <li><a target="_blank" href="https://www.pullandbear.com">Pull&Bear</a></li>
+                            <li><a target="_blank" href="https://www.weekday.com">Weekday</a></li>
+                            <li><a target="_blank" href="https://www.hollisterco.com">Hollister (+ Social Tourist)</a></li>
+                            <li><a target="_blank" href="https://www.riverisland.com">River Island</a></li>
+                        </ul>
+                        <ul class="second-store-column">
+                            <li><a target="_blank" href="https://shop.mango.com/">Mango</a></li>
+                            <li><a target="_blank" href="https://www.reserved.com">Reserved</a></li>
+                            <li><a target="_blank" href="https://www.guess.com">Guess</a></li>
+                            <li><a target="_blank" href="https://www.ae.com">American Eagle</a> *</li>
+                            <li><a target="_blank" href="https://www.ae.com/us/en/c/aerie/cat4840006">Aerie</a> *</li>
+                            <li><a target="_blank" href="https://www.c-and-a.com">C&A</a> *</li>
+                            <li><a target="_blank" href="https://www.newyorker.de">New Yorker</a> *</li>
+                        </ul>
+                    </div>
+                    <i>* least accurate</i>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Understood!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="linkBackdrop" data-bs-backdrop="link" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="linkBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="linkBackdropLabel">Article link</h5>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p><strong>With a link: </strong>use the link of a article from a online shop. This is only
+                        available for the following stores:</p>
+                    <div class="row justify-content-sm-left">
+                        <ul>
+                            <li><a target="_blank" href="https://www.hm.com/">H&M</a></li>
+                            <li><a target="_blank" href="www.zara.com">Zara</a></li>
+                            <li><a target="_blank" href="https://www.bershka.com">Bershka</a></li>
+                            <li><a target="_blank" href="https://www.pullandbear.com">Pull&Bear</a></li>
+                            <li><a target="_blank" href="https://www.stradivarius.com">Stradivarius</a></li>
+                            <li><a target="_blank" href="https://www.riverisland.com">River Island</a></li>
+                            <li><a target="_blank" href="https://www.hollisterco.com">Hollister (+ Social Tourist)</a></li>
+                            <li><a target="_blank" href="https://www.weekday.com">Weekday</a></li>
+                            <li><a target="_blank" href="https://www.guess.com">Guess</a></li>
+                            <li><a target="_blank" href="https://www.reserved.com">Reserved</a></li>
+                        </ul>
+                        <ul class="second-store-column">
+                            <li><a target="_blank" href="https://shop.mango.com/">Mango</a></li>
+                            <li><a target="_blank" href="https://www.vrggrl.com">VRG GRL</a> *</li>
+                            <li><a target="_blank" href="https://www.c-and-a.com">C&A</a> *</li>
+                            <li><a target="_blank" href="https://www.newyorker.de">New Yorker</a> *</li>
+                            <li><a target="_blank" href="https://www.ae.com">American Eagle</a> *</li>
+                            <li><a target="_blank" href="https://www.ae.com/us/en/c/aerie/cat4840006">Aerie</a> *</li>
+                            <li><a target="_blank" href="https://www.abercrombie.com">Abercrombie & Fitch</a> *</li>
+                            <li><a target="_blank" href="https://www.express.com">Express</a> *</li>
+                            <li><a target="_blank" href="https://www.everlane.com">Everlane</a> *</li>
+                        </ul>
+                    </div>
+                    <i>* least accurate</i>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Understood!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="forselectedBackdrop" data-bs-backdrop="forselected" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="forselectedBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forselectedBackdropLabel">Ready to go images</h5>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Choose a ready to go image: </strong>you can pick a preselected image so that you don't need to give a link, number or an image from an product. The ready to go images change every time you reload the page.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Understood!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <form id="gender-form" method="post">
+                    <input name="gender-switch" type="checkbox" id="gender-switch-main" onchange="updateGender()"
+                        {{ checked_status }}>
+                </form>
+                <div class="logo-black logo-header">
+                    <img class="logo-header-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </div>
+                <div class="page-header">
+                    <h2 class="page-title home-input-title">Your input</h2>
+                    <div class="col-md-6 page-header-switch">
+                        <div class="col-md-12">
+                            <label class="gender-toggle" for="gender-switch-main">
+                                <div class="toggle {{ toggle_status }}"></div>
+                                <div class="names">
+                                    <p class="light {{ light_status }}">Women</p>
+                                    <p class="dark {{ dark_status }}">Men</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger alert-show">
+                                <button type="button" class="close alert-close" data-dismiss="alert">&times;</button>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="row card-items">
+                    <div class="col-md-6 col-xl-6 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <form autocomplete="off" action="/predict/" method="post" enctype="multipart/form-data" id="uploader">
+                                    <label for="upload-input" hidden></label>
+                                    <input name="gender-switch" type="checkbox" class="gender-switch">
+                                    <input name="UserID" type="text" class="useridInput">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">Image</h4>
+                                        <span class="material-symbols-outlined tooltip-icon help-icon" data-bs-toggle="modal"
+                                            data-bs-target="#uploadBackdrop">help</span>
+                                    </div>
+                                    <div class="upload-div" {{ display_status }}>
+                                        <input type="file" name="file" id="upload-input" accept="image/*"/>
+
+                                        <p id="upload_text"><i class="fa-solid fa-cloud-arrow-up"></i> Click or drag</p>
+
+                                    </div>
+                                </form>
+                                <div class="or-header">
+                                    <h2 class="page-title or-title">OR</h2>
+                                </div>
+                                <div class="line or-line"></div> 
+                                <button 
+                                    class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn forselected-show-btn readytogo-btn"
+                                    >READY TO GO IMAGES</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-6 grid-margin column text-input-column">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">article link</h4>
+                                        <span class="material-symbols-outlined tooltip-icon help-icon" data-bs-toggle="modal"
+                                            data-bs-target="#linkBackdrop">help</span>
+                                    </div>
+                                    <div {{ display_status }}>
+                                        <form autocomplete="off" action="/predict/" method="post" enctype="multipart/form-data">
+                                            <input name="gender-switch" type="checkbox" class="gender-switch">
+                                            <input name="UserID" type="text" class="useridInput">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text"><i class="fa-solid fa-link"></i></span>
+                                                </div>
+                                                <input name="link" type="text" class="form-control" id="articleLink"
+                                                    placeholder="Link of article">
+                                            </div>
+                                            <p></p>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text"><i class="fa-solid fa-store"></i></span>
+                                                </div>
+                                                <select name="store" class="form-control" onchange="document.getElementById('link-confirm-btn').disabled = false">
+                                                    <option selected disabled hidden>Choose a store</option>
+                                                    <option disabled>Most accurate:</option>
+                                                    <option>H&M</option>
+                                                    <option>Zara</option>
+                                                    <option>Bershka</option>
+                                                    <option>Pull&Bear</option>
+                                                    <option>Stradivarius</option>
+                                                    <option>Weekday</option>
+                                                    <option>River Island</option>
+                                                    <option>Hollister (+ Social Tourist)</option>
+                                                    <option>Guess</option>
+                                                    <option>Reserved</option>
+                                                    <option>Mango</option>
+                                                    <option disabled>Least accurate:</option>
+                                                    <option>C&A</option>
+                                                    <option>New Yorker</option>
+                                                    <option>American Eagle</option>
+                                                    <option>Aerie</option>
+                                                    <option>VRG GRL</option>
+                                                    <option>Abercrombie & Fitch</option>
+                                                    <option>Express</option>
+                                                    <option>Everlane</option>
+                                                </select>
+                                            </div>
+                                            <p></p>
+
+                                            <button type="submit" value="Submit" name="BtnSubmit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                                                onclick="loading();" id="link-confirm-btn" disabled>CONFIRM</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xl-12 grid-margin number-input-column">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">article number</h4>
+                                        <span class="material-symbols-outlined tooltip-icon help-icon" data-bs-toggle="modal"
+                                            data-bs-target="#numberBackdrop">help</span>
+                                    </div>
+                                    <div {{ display_status }}>
+                                        <form autocomplete="off" action="/predict/" method="post" enctype="multipart/form-data">
+                                            <input name="gender-switch" type="checkbox" class="gender-switch">
+                                            <input name="UserID" type="text" class="useridInput">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+                                                </div>
+                                                <input name="number" type="text" class="form-control" id="articleNumber"
+                                                placeholder="Article number">
+                                            </div>
+                                            <p></p>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa-solid fa-store"></i></span>
+                                                </div>
+                                                <select name="store" class="form-control" onchange="document.getElementById('number-confirm-btn').disabled = false">
+                                                    <option selected disabled hidden>Choose a store</option>
+                                                    <option disabled>Most accurate:</option>
+                                                    <option>H&M</option>
+                                                    <option>Zara</option>
+                                                    <option>Bershka</option>
+                                                    <option>Pull&Bear</option>
+                                                    <option>Weekday</option>
+                                                    <option>River Island</option>
+                                                    <option>Hollister (+ Social Tourist)</option>
+                                                    <option>Guess</option>
+                                                    <option>Reserved</option>
+                                                    <option>Mango</option>
+                                                    <option disabled>Least accurate:</option>
+                                                    <option>C&A</option>
+                                                    <option>New Yorker</option>
+                                                    <option>American Eagle</option>
+                                                    <option>Aerie</option>
+                                                    <option>Abercrombie & Fitch</option>
+                                                </select>
+                                            </div>
+                                            <p></p>
+
+                                            <button type="submit" value="Submit" name="BtnSubmit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                                                onclick="loading();" id="number-confirm-btn" disabled>CONFIRM</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="display-none" method="post" id="forselected-form" action="/predict/" enctype="multipart/form-data">
+                    <input name="UserID" type="text" class="useridInput">
+                    <input type="text" name="forselected-input" id="forselected-input">
+                </form>
+                <div class="forselected-container">
+                    <div class="page-header forselected-header">
+                            <h2 class="page-title">Ready to go images</h2>
+                            <span style="line-height: .9;" class=" material-symbols-outlined tooltip-icon results-help-icon" data-bs-toggle="modal" data-bs-target="#forselectedBackdrop">help</span>
+                    </div>
+                    
+                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag forselected-container" id="owl-carousel-recommended">
+                        <div class="owl-stage-outer">
+                            <div class="owl-stage result-owl-stage">
+                                {% for index in range(0, len) %}
+                                    <div class="owl-item">
+                                        <div class="item">           
+                                            <div class="col-md-4 col-xl-4 grid-margin recommended-card">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <img src="{{ url_for('static', filename=product_img[index]) }}" alt="No image is available" class="forselected-img">
+                                                        <div class="white-space"></div>
+                                                        <button value="{{ product_store[index] }} {{ product_number[index] }}" name="1" type="button" class="forselected-btn btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn">PICK</button>
+                                                        <div class="d-flex py-4 results-card-bottom">
+                                                            <div class="preview-list w-100">
+                                                                <div class="preview-item p-0">
+                                                                    <div class="preview-item-content d-flex flex-grow">
+                                                                        <div class="flex-grow">
+                                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                                <h6 class="preview-subject">{{ product_number_1 }}</h6>
+                                                                            </div>
+                                                                            <a {{ product_link_1 }} class="text-muted">Check the product on {{ product_store_1 }}!</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>        
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="owl-dots"></div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center flex-column">
+                    <span class="text-muted row text-center footer-links">
+                        <div><a data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">Help</a></div>
+                        <div><a data-bs-toggle="modal"
+                            data-bs-target="#privacyBackdrop">Privacy</a></div>
+                    </span>
+                    <span class="text-muted d-block text-center d-sm-inline-block">Copyright © 2022 Yarne
+                        Gooris</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <script src="{{ url_for('static',filename='vendors/owl-carousel-2/owl.carousel.min.js') }}"> </script>
+
+    <script src="{{ url_for('static',filename='js/off-canvas.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/hoverable-collapse.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/misc.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/settings.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/gender.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/uuid.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/recommend.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/dashboard.js') }}"> </script>
+
+    <script>
+        forselected_status = false
+        function loading() {
+            $('.loader-background').show();
+        }
+        $(window).on('load', function () {
+            $('.loader-background').hide();
+        })
+        document.querySelectorAll('.forselected-btn').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                loading()
+                document.getElementById('forselected-input').value = anchor.value
+                document.getElementById('forselected-form').submit()
+            });
+        });
+        document.querySelectorAll('.forselected-show-btn').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (forselected_status == false) {
+                    document.querySelector('.forselected-container').style.display = 'block';
+                    document.querySelector('.forselected-container').scrollIntoView();
+                    forselected_status = true
+                } else {
+                    document.querySelector('.forselected-container').style.display = 'none';
+                    forselected_status = false
+                }
+            });
+        });
+    </script>
+    <script type="module">
+        $(document).ready(function () {
+            // Check if user saw the modal
+            var key = 'UserAgreed',
+                userChoice = localStorage.getItem('UserAgreed');
+                UserID = localStorage.getItem('UserID');
+            // Show the modal only if new user
+            if (!userChoice) {
+                $('#cookiesBackdrop').modal('show');
+            } else {        
+                var myElements = document.querySelectorAll('.useridInput')
+                for (let i = 0; i < myElements.length; i++) {
+                    myElements[i].value = UserID;
+                }
+                var request = new XMLHttpRequest();
+                request.open("GET", "/full_reset" + UserID, true);
+                request.send();
+            }
+        });
+
+        document.getElementById("upload-input").addEventListener("change", function (e) {
+            loading()
+            document.getElementById('uploader').submit()
+        });
+      </script>
+</body>
+
+</html>

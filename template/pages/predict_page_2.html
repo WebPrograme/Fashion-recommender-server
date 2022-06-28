@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#fff">
+    <title>Results | Fashion recommender</title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendors/mdi/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendors/css/vendor.bundle.base.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/owl-carousel-2/owl.carousel.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='scss/components/mixins/_animation.scss') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/owl-carousel-2/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/fontawesome/css/all.css') }}">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/updated.css') }}">
+    
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/logo small.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static',filename='images/logo ios.png') }}">
+    <link rel="manifest" href="{{ url_for('static',filename='manifest.json') }}">
+</head>
+
+<body>
+    <div class='loader-background'>
+        <div class="spinner-border loader" role="status">
+        </div>
+        <span class='loading-span'>
+            <span class="loading-span-main">Processing...</span>
+            <p>This can take a few seconds</p>
+        </span>
+    </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <img class="logo-header-img logo-header-img-black" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                <p type="button" data-bs-dismiss="modal">Close</p>
+              </div>
+              <div class="modal-body">
+                  <p>The results consists of 10 clothing pieces of various online stores. You can see the picture of the product and when available, an image of a model wearing the product. You can also click on the result to see the product on the stores website (when available). The results are only available from the following stores:</p>
+                  <div class="row justify-content-sm-left">  
+                    <ul>
+                        <li><a target="_blank" href="https://www.hm.com/">H&M</a></li>
+                        <li><a target="_blank" href="www.zara.com">Zara</a></li>
+                        <li><a target="_blank" href="https://www.bershka.com">Bershka</a></li>
+                        <li><a target="_blank" href="https://www.pullandbear.com">Pull&Bear</a></li>
+                        <li><a target="_blank" href="https://www.stradivarius.com">Stradivarius</a></li>
+                        <li><a target="_blank" href="https://shop.mango.com/">Mango</a></li>
+                    </ul>
+                    <ul class="second-store-column">
+                        <li><a target="_blank" href="https://www.zalando.com">Zalando</a></li>
+                        <li><a target="_blank" href="https://www.mostwantednl.nl">Most Wanted</a></li>
+                        <li><a target="_blank" href="https://www.wefashion.com">WE</a></li>
+                        <li><a target="_blank" href="https://www.weekday.com">Weekday</a></li>
+                        <li><a target="_blank" href="https://shop.mango.com/">Mango</a></li>
+                    </ul>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn" data-bs-dismiss="modal">Understood!</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="privacyBackdrop" data-bs-backdrop="privacy" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="privacydropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="privacydropLabel">Privacy</h4>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p>We use functional cookies and similar technologies that are necessary to operate this website. We don't use any third party cookies so your data stays protected. <i>All image rights reserved to the linked stores</i></p>
+                    <div class="accordion" id="accordion-privacy" role="tablist">
+                        <div class="card">
+                          <a onclick="document.getElementById('accordion-privacy-item-1-header-arrow').classList.toggle('accordion-header-arrow-flip')" data-bs-toggle="collapse" href="#collapse-privacy-3" aria-expanded="false" aria-controls="collapse-privacy-3" class="card-header accordion-header justify-content-between" role="tab" id="heading-privacy-3">
+                            <h6 class="mb-0">
+                              Functional cookies 
+                            </h6>
+                            <i class="fa-solid fa-chevron-down" id="accordion-privacy-item-1-header-arrow"></i>
+                          </a>
+                          <div id="collapse-privacy-3" class="collapse" role="tabpanel" aria-labelledby="heading-privacy-3" data-bs-parent="#accordion-privacy">
+                            <div class="card-body"> 
+                                <p>We use Local Storage to run this website. In the Local Storage we save your unique id that will be made when you agree to our privacy policy (this and the above text). We also save here if you have agreed to the terms. Local Storage is saved on your device, NOT on the server.</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                            <a onclick="document.getElementById('accordion-privacy-item-2-header-arrow').classList.toggle('accordion-header-arrow-flip')" data-bs-toggle="collapse" href="#collapse-privacy-2" aria-expanded="false" aria-controls="collapseTwo" class="card-header accordion-header justify-content-between" role="tab" id="heading-privacy-2">
+                              <h6 class="mb-0">
+                                Your saved data 
+                              </h6>
+                              <i class="fa-solid fa-chevron-down" id="accordion-privacy-item-2-header-arrow"></i>
+                            </a>
+                            <div id="collapse-privacy-2" class="collapse" role="tabpanel" aria-labelledby="heading-privacy-2" data-bs-parent="#accordion-privacy">
+                                <div class="card-body"> 
+                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (article number, article link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="helpBackdrop" data-bs-backdrop="help" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="helpBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img class="logo-header-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <p>This programm is an AI-model which is trained to recommend you clothes based on the style and
+                        similarities of your given input.</p>
+                    <p>There are 3 ways to give your input to the programm (plus the gender choose). After you choosed
+                        an input, the programm will process your input. This can take a few seconds.</p>
+                    <p><strong>Your own image: </strong>use your own image of a clothing piece (the image will be saved!). We recommend to use a white or natural background and <strong class="modal-text-danger">NEVER UPLOAD AN IMAGE WHERE THERE IS A PERSON IN</strong>.</p>
+                    <p><strong>With an article number: </strong>give the article number of your clothing piece. This is
+                        only available for a few stores.</p>
+                    <p><strong>With a link: </strong>use the link of a article from a online shop. This is only
+                        available for a few stores.</p>
+                    <p>The results consists of 10 clothing pieces of various online stores. You can see the picture of
+                        the product and when available, an image of a model wearing the product. You can also click on
+                        the result to see the product on the stores website (when available).</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
+                        data-bs-dismiss="modal">Understood!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid page-body-wrapper">
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="logo-header logo-black">
+                    <img class="logo-header-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                </div>
+                <div class="row card-items">
+                    <div class="col-md-3 grid-margin input-card">
+                        <div class="card">
+                            <div class="card-body input-card-body">
+                                <img src="{{ url_for('upload', filename=uploaded_img) }}" id="input-image" class="upload-result">
+                                <a href="/" type="submit" class="rechoose-input-btn btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn">RECHOOSE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form id="gender-form" method="post">
+                    <input name="gender-switch" type="checkbox" id="gender-switch" onchange="updateGender()" {{ checked_status }}>
+                </form>
+                <div class="page-header result-header">
+                    <h2 class="page-title result-title page-number-title">Page 2</h2>
+                </div>
+                <div class="line"></div> 
+                <div class="row card-items results-large">
+                    <div class="col-md-5 results-column">
+                        <a {{ product_link_1 }} target="_blank" title="Click to see this item on {{ product_store_1 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_1 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_1 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext()">
+                                                        <div class="item">
+                                                            {% if product_store_1 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_1) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_1 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_1) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_1 %}
+                                            <button id="recommendBtn1" onclick="recommend(event, '1')" value="{{ product_number_1 }} {{ product_store_1 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_1_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-1 row recommended-results">
+                                                <a id="recommended_result_1_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_1_img_1"></a>
+                                                <a id="recommended_result_1_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_1_img_2"></a>
+                                                <a id="recommended_result_1_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_1_img_3"></a>
+                                                <a id="recommended_result_1_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_1_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-1">Recommended by {{ product_store_1 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_1 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_1 }} class="text-muted">Check the product on {{ product_store_1 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_3 }} target="_blank" title="Click to see this item on {{ product_store_3 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_3 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_3 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-3">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext3()">
+                                                        <div class="item">
+                                                            {% if product_store_3 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_3) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_3 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev3()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_3) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_3 %}
+                                            <button id="recommendBtn3" onclick="recommend(event, '3')" value="{{ product_number_3 }} {{ product_store_3 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_3_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-3 row recommended-results">
+                                                <a id="recommended_result_3_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_3_img_1"></a>
+                                                <a id="recommended_result_3_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_3_img_2"></a>
+                                                <a id="recommended_result_3_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_3_img_3"></a>
+                                                <a id="recommended_result_3_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_3_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-3">Recommended by {{ product_store_3 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_3 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_3 }} class="text-muted">Check the product on {{ product_store_3 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_5 }} target="_blank" title="Click to see this item on {{ product_store_5 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_5 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_5 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-5">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext5()">
+                                                        <div class="item">
+                                                            {% if product_store_5 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_5) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_5 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev5()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_5) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_5 %}
+                                            <button id="recommendBtn5" onclick="recommend(event, '5')" value="{{ product_number_5 }} {{ product_store_5 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_5_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-5 row recommended-results">
+                                                <a id="recommended_result_5_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_5_img_1"></a>
+                                                <a id="recommended_result_5_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_5_img_2"></a>
+                                                <a id="recommended_result_5_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_5_img_3"></a>
+                                                <a id="recommended_result_5_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_5_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-5">Recommended by {{ product_store_5 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_5 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_5 }} class="text-muted">Check the product on {{ product_store_5 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_7 }} target="_blank" title="Click to see this item on {{ product_store_7 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_7 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_7 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-7">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext7()">
+                                                        <div class="item">
+                                                            {% if product_store_7 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_7) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_7 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev7()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_7) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_7 %}
+                                            <button id="recommendBtn7" onclick="recommend(event, '7')" value="{{ product_number_7 }} {{ product_store_7 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_7_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-7 row recommended-results">
+                                                <a id="recommended_result_7_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_7_img_1"></a>
+                                                <a id="recommended_result_7_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_7_img_2"></a>
+                                                <a id="recommended_result_7_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_7_img_3"></a>
+                                                <a id="recommended_result_7_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_7_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-7">Recommended by {{ product_store_7 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_7 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_7 }} class="text-muted">Check the product on {{ product_store_7 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_9 }} target="_blank" title="Click to see this item on {{ product_store_9 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_9 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_9 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-9">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext9()">
+                                                        <div class="item">
+                                                            {% if product_store_9 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_9) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_9 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev9()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_9) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_9 %}
+                                            <button id="recommendBtn9" onclick="recommend(event, '9')" value="{{ product_number_9 }} {{ product_store_9 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_9_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-9 row recommended-results">
+                                                <a id="recommended_result_9_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_9_img_1"></a>
+                                                <a id="recommended_result_9_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_9_img_2"></a>
+                                                <a id="recommended_result_9_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_9_img_3"></a>
+                                                <a id="recommended_result_9_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_9_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-9">Recommended by {{ product_store_9 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_9 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_9 }} class="text-muted">Check the product on {{ product_store_9 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5 results-column">
+                        <a {{ product_link_2 }} target="_blank" title="Click to see this item on {{ product_store_2 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_2 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_2 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-2">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext2()">
+                                                        <div class="item">
+                                                            {% if product_store_2 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_2) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_2 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev2()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_2) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_2 %}
+                                            <button id="recommendBtn2" onclick="recommend(event, '2')" value="{{ product_number_2 }} {{ product_store_2 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_2_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-2 row recommended-results">
+                                                <a id="recommended_result_2_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_2_img_1"></a>
+                                                <a id="recommended_result_2_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_2_img_2"></a>
+                                                <a id="recommended_result_2_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_2_img_3"></a>
+                                                <a id="recommended_result_2_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_2_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-2">Recommended by {{ product_store_2 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_2 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_2 }} class="text-muted">Check the product on {{ product_store_2 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_4 }} target="_blank" title="Click to see this item on {{ product_store_4 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_4 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_4 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-4">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext4()">
+                                                        <div class="item">
+                                                            {% if product_store_4 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_4) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_4 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev4()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_4) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_4 %}
+                                            <button id="recommendBtn4" onclick="recommend(event, '4')" value="{{ product_number_4 }} {{ product_store_4 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_4_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-4 row recommended-results">
+                                                <a id="recommended_result_4_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_4_img_1"></a>
+                                                <a id="recommended_result_4_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_4_img_2"></a>
+                                                <a id="recommended_result_4_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_4_img_3"></a>
+                                                <a id="recommended_result_4_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_4_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-4">Recommended by {{ product_store_4 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_4 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_4 }} class="text-muted">Check the product on {{ product_store_4 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_6 }} target="_blank" title="Click to see this item on {{ product_store_6 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_6 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_6 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-6">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext6()">
+                                                        <div class="item">
+                                                            {% if product_store_6 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_6) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_6 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev6()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_6) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_6 %}
+                                            <button id="recommendBtn6" onclick="recommend(event, '6')" value="{{ product_number_6 }} {{ product_store_6 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_6_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-6 row recommended-results">
+                                                <a id="recommended_result_6_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_6_img_1"></a>
+                                                <a id="recommended_result_6_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_6_img_2"></a>
+                                                <a id="recommended_result_6_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_6_img_3"></a>
+                                                <a id="recommended_result_6_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_6_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-6">Recommended by {{ product_store_6 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_6 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_6 }} class="text-muted">Check the product on {{ product_store_6 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_8 }} target="_blank" title="Click to see this item on {{ product_store_8 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_8 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_8 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-8">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext8()">
+                                                        <div class="item">
+                                                            {% if product_store_8 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_8) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_8 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev8()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_8) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_8 %}
+                                            <button id="recommendBtn8" onclick="recommend(event, '8')" value="{{ product_number_8 }} {{ product_store_8 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_8_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-8 row recommended-results">
+                                                <a id="recommended_result_8_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_8_img_1"></a>
+                                                <a id="recommended_result_8_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_8_img_2"></a>
+                                                <a id="recommended_result_8_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_8_img_3"></a>
+                                                <a id="recommended_result_8_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_8_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-8">Recommended by {{ product_store_8 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_8 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_8 }} class="text-muted">Check the product on {{ product_store_8 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a {{ product_link_10 }} target="_blank" title="Click to see this item on {{ product_store_10 }}">
+                            <div class="col-md-12 col-xl-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h4 class="card-title">{{ product_number_10 }}</h4>
+                                            <h4 class="text-muted mb-1">{{ product_store_10 }}</h4>
+                                        </div>
+                                        <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                            id="owl-carousel-basic-10">
+                                            <div class="owl-stage-outer">
+                                                <div class="owl-stage result-owl-stage">
+                                                    <div class="owl-item" onmouseenter="sliderNext10()">
+                                                        <div class="item">
+                                                            {% if product_store_10 != 'Stradivarius' %}
+                                                                <img src="{{ url_for('static', filename=product_model_img_10) }}" alt="No image is available">
+                                                            {% else %}
+                                                                <img src="{{ product_model_img_10 }}" alt="No image is available">
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="owl-item" onmouseleave="sliderPrev10()">
+                                                        <div class="item">
+                                                            <img src="{{ url_for('static', filename=product_img_10) }}" alt="No image is available">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if recommend_avaible_10 %}
+                                            <button id="recommendBtn10" onclick="recommend(event, '10')" value="{{ product_number_10 }} {{ product_store_10 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_10_arrow" class="fa-solid fa-angle-down"></i></button>
+                                            <div class="recommended-results-10 row recommended-results">
+                                                <a id="recommended_result_10_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_10_img_1"></a>
+                                                <a id="recommended_result_10_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_10_img_2"></a>
+                                                <a id="recommended_result_10_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_10_img_3"></a>
+                                                <a id="recommended_result_10_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_10_img_4"></a>
+                                            </div>
+                                            <i class="recommended_store_credit text-muted recommended-results-10">Recommended by {{ product_store_10 }}</i>
+                                        {% endif %}
+                                        <div class="d-flex py-4 results-card-bottom">
+                                            <div class="preview-list w-100">
+                                                <div class="preview-item p-0">
+                                                    <div class="preview-item-content d-flex flex-grow">
+                                                        <div class="flex-grow">
+                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                                <h6 class="preview-subject">{{ product_number_10 }}</h6>
+                                                            </div>
+                                                            <a {{ product_link_10 }} class="text-muted">Check the product on {{ product_store_10 }}!</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row card-items results-small">
+                    <a {{ product_link_1 }} target="_blank" title="Click to see this item on {{ product_store_1 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_1 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_1 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_1 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_1) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_1 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_1) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_1 %}
+                                        <button id="recommendBtn1" onclick="recommendSmall(event, '1')" value="{{ product_number_1 }} {{ product_store_1 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_1_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-1 row recommended-results recommended-small-results">
+                                            <a id="recommended_small_result_1_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_1_img_1"></a>
+                                            <a id="recommended_small_result_1_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_1_img_2"></a>
+                                            <a id="recommended_small_result_1_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_1_img_3"></a>
+                                            <a id="recommended_small_result_1_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_1_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-1">Recommended by {{ product_store_1 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_1 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_1 }} class="text-muted">Check the product on {{ product_store_1 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_2 }} target="_blank" title="Click to see this item on {{ product_store_2 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_2 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_2 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-2">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_2 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_2) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_2 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_2) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_2 %}
+                                        <button id="recommendBtn2" onclick="recommendSmall(event, '2')" value="{{ product_number_2 }} {{ product_store_2 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_2_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-2 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_2_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_2_img_1"></a>
+                                            <a id="recommended_small_result_2_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_2_img_2"></a>
+                                            <a id="recommended_small_result_2_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_2_img_3"></a>
+                                            <a id="recommended_small_result_2_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_2_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-2">Recommended by {{ product_store_2 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_2 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_2 }} class="text-muted">Check the product on {{ product_store_2 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_3 }} target="_blank" title="Click to see this item on {{ product_store_3 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_3 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_3 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-3">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_3 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_3) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_3 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_3) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_3 %}
+                                        <button id="recommendBtn3" onclick="recommendSmall(event, '3')" value="{{ product_number_3 }} {{ product_store_3 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_3_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-3 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_3_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_3_img_1"></a>
+                                            <a id="recommended_small_result_3_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_3_img_2"></a>
+                                            <a id="recommended_small_result_3_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_3_img_3"></a>
+                                            <a id="recommended_small_result_3_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_3_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-3">Recommended by {{ product_store_3 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_3 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_3 }} class="text-muted">Check the product on {{ product_store_3 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_4 }} target="_blank" title="Click to see this item on {{ product_store_4 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_4 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_4 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-4">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_4 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_4) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_4 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_4) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_4 %}
+                                        <button id="recommendBtn4" onclick="recommendSmall(event, '4')" value="{{ product_number_4 }} {{ product_store_4 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_4_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-4 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_4_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_4_img_1"></a>
+                                            <a id="recommended_small_result_4_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_4_img_2"></a>
+                                            <a id="recommended_small_result_4_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_4_img_3"></a>
+                                            <a id="recommended_small_result_4_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_4_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-4">Recommended by {{ product_store_4 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_4 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_4 }} class="text-muted">Check the product on {{ product_store_4 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_5 }} target="_blank" title="Click to see this item on {{ product_store_5 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_5 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_5 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-5">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_5 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_5) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_5 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_5) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_5 %}
+                                        <button id="recommendBtn5" onclick="recommendSmall(event, '5')" value="{{ product_number_5 }} {{ product_store_5 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_5_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-5 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_5_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_5_img_1"></a>
+                                            <a id="recommended_small_result_5_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_5_img_2"></a>
+                                            <a id="recommended_small_result_5_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_5_img_3"></a>
+                                            <a id="recommended_small_result_5_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_5_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-5">Recommended by {{ product_store_5 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_5 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_5 }} class="text-muted">Check the product on {{ product_store_5 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_6 }} target="_blank" title="Click to see this item on {{ product_store_6 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_6 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_6 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-6">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_6 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_6) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_6 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_6) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_6 %}
+                                        <button id="recommendBtn6" onclick="recommendSmall(event, '6')" value="{{ product_number_6 }} {{ product_store_6 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_6_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-6 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_6_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_6_img_1"></a>
+                                            <a id="recommended_small_result_6_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_6_img_2"></a>
+                                            <a id="recommended_small_result_6_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_6_img_3"></a>
+                                            <a id="recommended_small_result_6_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_6_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-6">Recommended by {{ product_store_6 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_6 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_6 }} class="text-muted">Check the product on {{ product_store_6 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_7 }} target="_blank" title="Click to see this item on {{ product_store_7 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_7 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_7 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-7">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_7 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_7) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_7 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_7) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_7 %}
+                                        <button id="recommendBtn7" onclick="recommendSmall(event, '7')" value="{{ product_number_7 }} {{ product_store_7 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_7_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-7 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_7_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_7_img_1"></a>
+                                            <a id="recommended_small_result_7_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_7_img_2"></a>
+                                            <a id="recommended_small_result_7_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_7_img_3"></a>
+                                            <a id="recommended_small_result_7_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_7_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-7">Recommended by {{ product_store_7 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_7 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_7 }} class="text-muted">Check the product on {{ product_store_7 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_8 }} target="_blank" title="Click to see this item on {{ product_store_8 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_8 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_8 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-8">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_8 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_8) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_8 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_8) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_8 %}
+                                        <button id="recommendBtn8" onclick="recommendSmall(event, '8')" value="{{ product_number_8 }} {{ product_store_8 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_8_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-8 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_8_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_8_img_1"></a>
+                                            <a id="recommended_small_result_8_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_8_img_2"></a>
+                                            <a id="recommended_small_result_8_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_8_img_3"></a>
+                                            <a id="recommended_small_result_8_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_8_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-8">Recommended by {{ product_store_8 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_8 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_8 }} class="text-muted">Check the product on {{ product_store_8 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_9 }} target="_blank" title="Click to see this item on {{ product_store_9 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_9 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_9 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-9">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_9 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_9) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_9 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_9) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_9 %}
+                                        <button id="recommendBtn9" onclick="recommendSmall(event, '9')" value="{{ product_number_9 }} {{ product_store_9 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_9_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-9 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_9_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_9_img_1"></a>
+                                            <a id="recommended_small_result_9_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_9_img_2"></a>
+                                            <a id="recommended_small_result_9_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_9_img_3"></a>
+                                            <a id="recommended_small_result_9_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_9_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-9">Recommended by {{ product_store_9 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_9 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_9 }} class="text-muted">Check the product on {{ product_store_9 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a {{ product_link_10 }} target="_blank" title="Click to see this item on {{ product_store_10 }}">
+                        <div class="col-md-12 col-xl-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <h4 class="card-title">{{ product_number_10 }}</h4>
+                                        <h4 class="text-muted mb-1">{{ product_store_10 }}</h4>
+                                    </div>
+                                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag"
+                                        id="owl-carousel-small-10">
+                                        <div class="owl-stage-outer">
+                                            <div class="owl-stage result-owl-stage">
+                                                <div class="owl-item">
+                                                    <div class="item model-img">
+                                                        {% if product_store_10 != 'Stradivarius' %}
+                                                            <img src="{{ url_for('static', filename=product_model_img_10) }}" alt="No image is available">
+                                                        {% else %}
+                                                            <img src="{{ product_model_img_10 }}" alt="No image is available">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="owl-item">
+                                                    <div class="item product-img">
+                                                        <img src="{{ url_for('static', filename=product_img_10) }}" alt="No image is available">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if recommend_avaible_10 %}
+                                        <button id="recommendBtn10" onclick="recommendSmall(event, '10')" value="{{ product_number_10 }} {{ product_store_9 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_10_arrow" class="fa-solid fa-angle-down"></i></button>
+                                        <div class="recommended-small-results-10 row recommended-small-results recommended-results">
+                                            <a id="recommended_small_result_10_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_10_img_1"></a>
+                                            <a id="recommended_small_result_10_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_10_img_2"></a>
+                                            <a id="recommended_small_result_10_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_10_img_3"></a>
+                                            <a id="recommended_small_result_10_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_10_img_4"></a>
+                                        </div>
+                                        <i class="recommended_store_credit text-muted recommended-small-results-10">Recommended by {{ product_store_10 }}</i>
+                                    {% endif %}
+                                    <div class="d-flex py-4 results-card-bottom">
+                                        <div class="preview-list w-100">
+                                            <div class="preview-item p-0">
+                                                <div class="preview-item-content d-flex flex-grow">
+                                                    <div class="flex-grow">
+                                                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                                            <h6 class="preview-subject">{{ product_number_10 }}</h6>
+                                                        </div>
+                                                        <a {{ product_link_10 }} class="text-muted">Check the product on {{ product_store_10 }}!</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <form class="change_page_form" action="{{ url_for('prev_page') }}" method="post">
+                <input type="hidden" name="id" value="{{ UserID }}">
+                <input type="hidden" name="gender" value="{{ gender }}">
+                <button type="submit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn">Show first page</button>
+            </form>      
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center flex-column">
+                    <span class="text-muted row text-center footer-links">
+                        <div><a data-bs-toggle="modal"
+                            data-bs-target="#helpBackdrop">Help</a></div>
+                        <div><a data-bs-toggle="modal"
+                            data-bs-target="#privacyBackdrop">Privacy</a></div>
+                    </span>
+                    <span class="text-muted d-block text-center d-sm-inline-block">Copyright © 2022 Yarne
+                        Gooris</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='vendors/js/vendor.bundle.base.js') }}"> </script>
+
+    <script src="{{ url_for('static',filename='vendors/owl-carousel-2/owl.carousel.min.js') }}"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    <script src="{{ url_for('static',filename='js/off-canvas.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/hoverable-collapse.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/misc.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/settings.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/index.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/dashboard.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/reset.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/recommend.js') }}"> </script>
+
+    <script>
+        $(window).on('load', function () {
+            $('.loader-background').hide();
+        })
+        
+        UserID = "{{ UserID }}";
+        Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
+            var request = new XMLHttpRequest();
+            request.open("GET", "/reset" + UserID, true);
+            request.send();
+        });
+    </script>  
+</body>
+
+</html>
