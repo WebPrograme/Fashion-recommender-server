@@ -27,42 +27,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36
            "Accept-Language": "en-US,en;q=0.5",
            "Accept-Encoding": "gzip, deflate"}
 
-forselectedItems = ['fashion_bershka//women\\0581666603.webp',
-                    'fashion_bershka//women\\0847810920.webp',
-                    'fashion_bershka//women\\1305354615.webp',
-                    'fashion_bershka//women\\1618200400.webp',
-                    'fashion_bershka//women\\1619200806.webp',
-                    'fashion_bershka//women\\2562033807.webp',
-                    'fashion_bershka//women\\2569492800.webp',
-                    'fashion_bershka//women\\3315187800.webp',
-                    'fashion_bershka//women\\4048694800.webp',
-                    'fashion_bershka//women\\7603777514.webp',
-                    'fashion_bershka//women\\2317381800.webp',
-                    'fashion_bershka//women\\0045969428.webp',
-                    'fashion_bershka//women\\0054969433.webp',
-                    'fashion_bershka//women\\0035352400.webp',
-                    'fashion_hm//women\\0940771016.webp',
-                    'fashion_hm//women\\0981815007.webp',
-                    'fashion_hm//women\\0982361008.webp',
-                    'fashion_hm//women\\0994907004.webp',
-                    'fashion_hm//women\\1018158008.webp',
-                    'fashion_hm//women\\1021205001.webp',
-                    'fashion_hm//women\\1026309002.webp',
-                    'fashion_hm//women\\1028353003.webp',
-                    'fashion_hm//women\\1031889003.webp',
-                    'fashion_hm//women\\1042266001.webp',
-                    'fashion_hm//women\\1042286003.webp',
-                    'fashion_hm//women\\1048732001.webp',
-                    'fashion_mango//women\\2701826099.webp',
-                    'fashion_mango//women\\2702252679.webp',
-                    'fashion_mango//women\\2705576191.webp',
-                    'fashion_mango//women\\2708476650.webp',
-                    'fashion_mango//women\\2708288382.webp',
-                    'fashion_mango//women\\2709712743.webp',
-                    'fashion_mango//women\\2707475849.webp',
-                    'fashion_mango//women\\27022512TC.webp',
-                    'fashion_mango//women\\27021097TC.webp',
-                    'fashion_pullbear//women\\4245361603.webp',
+forselectedItems = ['fashion_pullbear//women\\4245361603.webp',
                     'fashion_pullbear//women\\4240362424.webp',
                     'fashion_pullbear//women\\4245317751.webp',
                     'fashion_pullbear//women\\4245386445.webp',
@@ -94,59 +59,9 @@ forselectedItems = ['fashion_bershka//women\\0581666603.webp',
                     'fashion_pullbear//women\\4549309430.webp',
                     'fashion_pullbear//women\\4390360800.webp',
                     'fashion_pullbear//women\\4246332515.webp',
-                    'fashion_pullbear//women\\4245376500.webp',
-                    'fashion_stradivarius//women\\0709203042.webp',
-                    'fashion_stradivarius//women\\0927029552.webp',
-                    'fashion_stradivarius//women\\2051876001.webp',
-                    'fashion_stradivarius//women\\2120225145.webp',
-                    'fashion_stradivarius//women\\2110419001.webp',
-                    'fashion_stradivarius//women\\2386228001.webp',
-                    'fashion_stradivarius//women\\2616512340.webp',
-                    'fashion_stradivarius//women\\2619836250.webp',
-                    'fashion_stradivarius//women\\5918583145.webp',
-                    'fashion_stradivarius//women\\7006820341.webp',
-                    'fashion_stradivarius//women\\7010186010.webp',
-                    'fashion_stradivarius//women\\7168120045.webp',
-                    'fashion_stradivarius//women\\7341168700.webp',
-                    'fashion_stradivarius//women\\7346216700.webp',
-                    'fashion_stradivarius//women\\8828132001.webp',
-                    'fashion_stradivarius//women\\8817155411.webp',
-                    'fashion_stradivarius//women\\7100184400.webp',
-                    'fashion_stradivarius//women\\7093130422.webp',
-                    'fashion_stradivarius//women\\2663663001.webp',
-                    'fashion_stradivarius//women\\2504571400.webp',
-                    'fashion_stradivarius//women\\0861026144.webp',
-                    'fashion_stradivarius//women\\0894063004.webp',
-                    'fashion_stradivarius//women\\1362768702.webp',
-                    'fashion_zara//women\\0219856.webp',
-                    'fashion_zara//women\\1971065.webp',
-                    'fashion_zara//women\\3067418.webp',
-                    'fashion_zara//women\\3137352.webp',
-                    'fashion_zara//women\\3257851.webp',
-                    'fashion_zara//women\\3253320.webp',
-                    'fashion_zara//women\\3451781.webp',
-                    'fashion_zara//women\\3471009.webp',
-                    'fashion_zara//women\\3641322.webp',
-                    'fashion_zara//women\\3991047.webp',
-                    'fashion_zara//women\\4387312.webp',
-                    'fashion_zara//women\\4886051.webp',
-                    'fashion_zara//women\\5039642.webp',
-                    'fashion_zara//women\\6050416.webp',
-                    'fashion_zara//women\\6840087.webp',
-                    'fashion_zara//women\\7901184.webp',
-                    'fashion_zara//women\\8342009.webp',
-                    'fashion_zara//women\\9479046.webp',
-                    'fashion_zara//women\\3920065.webp',
-                    'fashion_zara//women\\3067077.webp',
-                    'fashion_zara//women\\3316500.webp',]
+                    'fashion_pullbear//women\\4245376500.webp']
 
-bershka_items = [item[:-5] for item in os.listdir('static//fashion_bershka//women')]
-hm_items = [item[:-5] for item in os.listdir('static//fashion_hm//women')]
-mango_items = [item[:-5] for item in os.listdir('static//fashion_mango//women')]
 pullbear_items = [item[:-5] for item in os.listdir('static//fashion_pullbear//women')]
-stradivarius_items = [item[:-5] for item in os.listdir('static//fashion_stradivarius//women')]
-zara_items = [item[:-5] for item in os.listdir('static//fashion_zara//women')]
-riverisland_items = [item[:-5] for item in os.listdir('static//fashion_riverisland//women')]
 
 @app.route('/', defaults={'page': 'index'})
 @app.route('/')
@@ -319,38 +234,8 @@ class extract_img():
         global headers
 
         if gender == 'woman':
-            if store == 'H&M' and number in hm_items:
-                img = Image.open(f'static\\fashion_hm\\women\\{number}.webp')
-                imgCopy = img.copy()
-                imgCopy.save(f'uploads\\{userID}.png')      
-                return
-            elif store == 'Bershka' and number in bershka_items:
-                img = Image.open(f'static\\fashion_bershka\\women\\{number}.webp')
-                imgCopy = img.copy()
-                imgCopy.save(f'uploads\\{userID}.png')      
-                return
-            elif store == 'Mango' and number in mango_items:
-                img = Image.open(f'static\\fashion_mango\\women\\{number}.webp')
-                imgCopy = img.copy()
-                imgCopy.save(f'uploads\\{userID}.png')      
-                return
-            elif store == 'Pull&Bear' and number in pullbear_items:
+            if store == 'Pull&Bear' and number in pullbear_items:
                 img = Image.open(f'static\\fashion_pullbear\\women\\{number}.webp')
-                imgCopy = img.copy()
-                imgCopy.save(f'uploads\\{userID}.png')      
-                return
-            elif store == 'Stradivarius' and number in stradivarius_items:
-                img = Image.open(f'static\\fashion_stradivarius\\women\\{number}.webp')
-                imgCopy = img.copy()
-                imgCopy.save(f'uploads\\{userID}.png')      
-                return
-            elif store == 'Zara' and number in zara_items:
-                img = Image.open(f'static\\fashion_zara\\women\\{number}.webp')
-                imgCopy = img.copy()
-                imgCopy.save(f'uploads\\{userID}.png')      
-                return        
-            elif store == 'River Island' and number in riverisland_items:
-                img = Image.open(f'static\\fashion_riverisland\\women\\{number}.webp')
                 imgCopy = img.copy()
                 imgCopy.save(f'uploads\\{userID}.png')      
                 return
@@ -1641,15 +1526,11 @@ def predict():
 def upload(filename):
     return send_from_directory('uploads', filename)
 
-if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument('-dev', '--dev-mode', action='store_true', help='Enable dev mode')
-    args = parser.parse_args()
-    dev_status = args.dev_mode
-    app.secret_key = 'FR6545'
-    app.config['SESSION_TYPE'] = 'Fashion recommender'
-    cors = CORS(app)
-    app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
-    log = logging.getLogger('werkzeug')
-    log.setLevel(logging.ERROR)
-    app.run(host="0.0.0.0")
+dev_status = False
+app.secret_key = 'FR6545'
+app.config['SESSION_TYPE'] = 'Fashion recommender'
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+app.run()
