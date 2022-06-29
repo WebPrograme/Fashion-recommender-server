@@ -29,11 +29,11 @@ features_list = pickle.load(open(r".\\img_data\\image_features_embeddingWOMEN.pk
 def process(gender, userID, pageNumber):
     global pick_store, product_status
     if gender == 'WOMEN':
-        img_files_list = pickle.load(open(f"app\\img_data\\img_filesWOMEN.pkl", "rb"))
-        features_list = pickle.load(open(f"app\\img_data\\image_features_embeddingWOMEN.pkl", "rb"))
+        img_files_list = pickle.load(open(r".\\img_data\\img_filesWOMEN.pkl", "rb"))
+        features_list = pickle.load(open(r".\\img_data\\image_features_embeddingWOMEN.pkl", "rb"))
     else:
-        img_files_list = pickle.load(open(f"app\\img_data\\img_filesMEN.pkl", "rb"))
-        features_list = pickle.load(open(f"app\\img_data\\image_features_embeddingMEN.pkl", "rb"))
+        img_files_list = pickle.load(open(r".\\img_data\\img_filesMEN.pkl", "rb"))
+        features_list = pickle.load(open(r".\\img_data\\image_features_embeddingMEN.pkl", "rb"))
     features = extract_img_features(f'uploads//{userID}.png', model)
     img_distence, img_indicess = recommendd(features, features_list)
     results = []

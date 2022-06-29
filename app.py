@@ -17,7 +17,7 @@ import model
 app = Flask('Fashion recommender', template_folder='template')
 dev_status = False
 
-express_color_list_file = open(f'static\\data\\express_color_list.json', 'r')
+express_color_list_file = open(r'.\\static\\data\\express_color_list.json', 'r')
 express_color_list = json.load(express_color_list_file)['colors']
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36', 
