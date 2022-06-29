@@ -7,6 +7,7 @@ import os
 
 import pickle
 import numpy as np
+import pathlib
 from numpy.linalg import norm
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -20,8 +21,10 @@ model = Sequential([model, GlobalMaxPooling2D()])
 pick_store = False
 product_status = False
 
-img_files_list = pickle.load(open(f"app\\img_data\\img_filesWOMEN.pkl", "rb"))
-features_list = pickle.load(open(f"app\\img_data\\image_features_embeddingWOMEN.pkl", "rb"))
+print(pathlib.Path(__file__).parent.resolve())
+
+img_files_list = pickle.load(open(r".\\img_data\\img_filesWOMEN.pkl", "rb"))
+features_list = pickle.load(open(r".\\img_data\\image_features_embeddingWOMEN.pkl", "rb"))
 
 def process(gender, userID, pageNumber):
     global pick_store, product_status
