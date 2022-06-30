@@ -887,6 +887,152 @@ class get_model_image():
         with open(f'static\\images\\model_img\\{userID}_{count}.webp', 'wb') as handler:
             handler.write(img_data)        
 
+class get_product_image():
+    def bershka(number):
+        possible_urls = [f"https://static.bershka.net/4/photos2/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
+                 f"https://static.bershka.net/4/photos2/2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
+                 f"https://static.bershka.net/4/photos2/2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
+                 f"https://static.bershka.net/4/photos2/2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
+                 f"https://static.bershka.net/4/photos2/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
+                 f"https://static.bershka.net/4/photos2/2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
+                 f"https://static.bershka.net/4/photos2/2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
+                 f"https://static.bershka.net/4/photos2/2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?"]
+
+        for url in possible_urls:
+            try:
+                response = requests.get(url, headers=headers)
+                if response.status_code == 200:
+                    return url
+            except:
+                pass
+    
+    def hm(number):
+        page = requests.get(f"https://www2.hm.com/nl_be/productpage.{number}.html", headers=headers).content
+
+        with open(f"bin\\hm.html", 'wb') as fp:
+            fp.write(page)
+
+        with open(f"bin\\hm.html") as fp:
+            soup = BeautifulSoup(fp, 'html.parser')
+            
+        slider = soup.find('div', {'class': 'mini-slider'})
+        items = slider.find_all('li', {'class': 'list-item'})
+
+        for item in items:
+            if not 'hidden' in item['class']:
+                url = item.find('noscript')['data-src']
+                if '/miniature]' in url:
+                    url = url.replace('/miniature]', '/main]')
+                    return url
+                
+    def mango(number):
+        return f"https://st.mngbcn.com/rcs/pics/static/T2/fotos/S20/{number[:-2]}_{number[-2:]}_B.jpg"
+    
+    def mostwanted(number):
+        page = requests.get(f"https://www.mostwantednl.nl/catalogsearch/result/?q={number}", headers=headers).content
+
+        with open(f"bin\\mostwanted.html", 'wb') as fp:
+            fp.write(page)
+            
+        with open(f"bin\\mostwanted.html") as fp:
+            soup = BeautifulSoup(fp, 'html.parser')
+            
+        url = soup.find('img', {'class': 'product-image-photo'})['src']
+
+        return url
+    
+    def pullbear(number):
+        possible_urls = [f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
+                 f"https://static.pullandbear.net/2/photos//2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
+                 f"https://static.pullandbear.net/2/photos//2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
+                 f"https://static.pullandbear.net/2/photos//2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
+                 f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
+                 f"https://static.pullandbear.net/2/photos//2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
+                 f"https://static.pullandbear.net/2/photos//2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
+                 f"https://static.pullandbear.net/2/photos//2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?"]
+        
+        for url in possible_urls:
+            try:
+                response = requests.get(url, headers=headers)
+                if response.status_code == 200:
+                    return url
+            except:
+                pass
+            
+    def riverisland(number):
+        return f"https://images.riverisland.com/is/image/RiverIsland/_{number}_alt2?$ProductImagePortraitLarge$"
+    
+    def stradivarius(number):
+        possible_urls = [f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_2_4_1.jpg',
+                 f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_2_4_1.jpg',
+                 f'https://static.e-stradivarius.net/5/photos3/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_2_4_1.jpg',
+                 f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_1_1_8.jpg',
+                 f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_1_1_8.jpg',
+                 f'https://static.e-stradivarius.net/5/photos3/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_1_1_8.jpg']
+
+        for url in possible_urls:
+            try:
+                response = requests.get(url, headers=headers)
+                if response.status_code == 200:
+                    return url
+            except:
+                pass
+            
+    def we(number):
+        return f"https://www.wefashion.be/dw/image/v2/AANH_PRD/on/demandware.static/-/Sites-master-catalog/default/images/hi-res/{number}_1.jpg"
+    
+    def weekday(number):
+        product_data = requests.get(f"https://photorankapi-a.akamaihd.net/customers/219461/streams/bytag/{number}?auth_token=36250991614184b2b35282b4efc7de904d5f0fbf01936e8a65006fc56dd969c4&wrap_responses=1&version=v2.2", headers=headers).content
+        with open(f"bin\\weekday.json", 'wb') as fp:
+            fp.write(product_data)
+        with open(f"bin\\weekday.json") as fp:
+            product_data = json.load(fp)
+            
+        product_url = product_data['data']['product_url']
+        product_data = requests.get(product_url, headers=headers).content
+
+        with open(f"bin\\weekday.html", 'wb') as fp:
+            fp.write(product_data)
+        with open(f"bin\\weekday.html") as fp:
+            soup = BeautifulSoup(fp, 'html.parser')
+            items = soup.find_all('div', {'class': 'placeholder-wrapper'})
+            
+        for item in items:
+            img = item.find('img')
+            if '[DESCRIPTIVESTILLLIFE]' in img['data-large-src']:
+                url = img['data-large-src']
+                return url
+            
+    def zalando(number):
+        img_data = requests.get(f'https://www.zalando.be/dames/?q={number}', headers=headers).content
+
+        with open(f"bin\\zalando.html", 'wb') as handler:
+            handler.write(img_data)
+            
+        with open(f"bin\\zalando.html", 'r', encoding='utf-8') as fp:
+            data = fp.read()
+            
+        end = data.find('&filter=packshot')
+        data = data[:end]
+        data_res = data[::-1]
+        start = data_res.find('"')
+        product_img_url = data[-start:]
+        url = product_img_url[:product_img_url.find('?imwidth=')]
+        
+        return url
+    
+    def zara(number):
+        data = requests.get(f'https://www.zara.com/be/nl/-p0{number}.html', headers=headers).content
+        
+        data = str(data)
+        img_find = data.find('6_1_1.jpg')
+        end = data[img_find:].find('"')
+        reverse = data[:end+img_find][::-1]
+        start = reverse.find('"')
+        url = reverse[:start][::-1]
+        
+        return url
+
 class switch_page():
     @app.route('/predict/1', methods=['POST', 'GET'])
     def prev_page():
@@ -1299,6 +1445,30 @@ def get_model_store(storeName, number, count, userID):
     elif storeName == 'River Island':
         get_model_image.riverisland(number, count, userID)
 
+def get_product_store(storeName, number, userID):
+    if storeName == 'H&M':
+        return get_product_image.hm(number, userID)
+    elif storeName == 'Mango':
+        return get_product_image.mango(number, userID)
+    elif storeName == 'Zara':
+        return get_product_image.zara(number, userID)
+    elif storeName == 'Pull&Bear':
+        return get_product_image.pullbear(number, userID)
+    elif storeName == 'Stradivarius':
+        return get_product_image.stradivarius(number, userID)
+    elif storeName == 'Bershka':
+        return get_product_image.bershka(number, userID)
+    elif storeName == 'WE':
+        return get_product_image.we(number, userID)
+    elif storeName == 'Weekday':
+        return get_product_image.weekday(number, userID)
+    elif storeName == 'Most Wanted':
+        return get_product_image.mostwanted(number, userID)
+    elif storeName == 'Zalando':
+        return get_product_image.zalando(number, userID)
+    elif storeName == 'River Island':
+        return get_product_image.riverisland(number, userID)
+
 def process_output(results, gender, userID):
     model_img = []
     product_img = []
@@ -1383,7 +1553,7 @@ def process_output(results, gender, userID):
             stores.append('WM')
 
         product_numbers.append(file_name[:-5])
-        product_img.append(f'{store_path}/{gender.lower()}/{file_name}')
+        product_img.append(get_product_store(storeName, file_name[:-5]))
         
         count += 1
     
