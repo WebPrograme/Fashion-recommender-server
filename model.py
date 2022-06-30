@@ -23,7 +23,7 @@ pick_store = False
 product_status = False
 
 map = os.listdir(pathlib.Path(__file__).parent.resolve())
-map_index = map.find('img_data')
+map_index = map.index('img_data')
 
 print(map[map_index])
 sys.stdout.flush()
