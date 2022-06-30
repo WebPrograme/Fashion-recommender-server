@@ -8,6 +8,7 @@ import os
 import pickle
 import numpy as np
 import pathlib
+import sys
 from numpy.linalg import norm
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -22,6 +23,7 @@ pick_store = False
 product_status = False
 
 print(pathlib.Path(__file__).parent.resolve())
+sys.stdout.flush()
 
 img_files_list = pickle.load(open(r".\img_data\img_filesWOMEN.pkl", "rb"))
 features_list = pickle.load(open(r".\img_data\image_features_embeddingWOMEN.pkl", "rb"))
