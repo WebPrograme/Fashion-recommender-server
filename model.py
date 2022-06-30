@@ -25,7 +25,7 @@ product_status = False
 map = os.listdir(pathlib.Path(__file__).parent.resolve())
 map_index = map.index('img_data')
 
-print(map[map_index])
+print(os.listdir('app\\' + map[map_index]))
 sys.stdout.flush()
 
 img_files_list = pickle.load(open("img_data\\img_filesWOMEN.pkl", "rb"))
