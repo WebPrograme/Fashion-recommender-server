@@ -22,7 +22,7 @@ model = Sequential([model, GlobalMaxPooling2D()])
 pick_store = False
 product_status = False
 
-print(pathlib.Path(__file__).parent.resolve())
+print(os.listdir(pathlib.Path(__file__).parent.resolve()))
 sys.stdout.flush()
 
 img_files_list = pickle.load(open(r".\app\img_data\img_filesWOMEN.pkl", "rb"))
