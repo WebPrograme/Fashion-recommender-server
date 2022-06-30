@@ -6,6 +6,7 @@ import random
 from argparse import ArgumentParser
 
 import click
+import sys
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, flash, redirect, render_template, request, send_from_directory, url_for
@@ -13,6 +14,9 @@ from flask_cors import CORS, cross_origin
 from PIL import Image
 
 import model
+
+print('[INFO] [{}] -- Starting app'.format(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
+sys.stdout.flush()
 
 app = Flask('Fashion recommender', template_folder='template')
 dev_status = False
