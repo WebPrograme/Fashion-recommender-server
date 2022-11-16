@@ -1,7 +1,6 @@
 gender_status = false
 
 function updateGender() {
-    console.log('Gender updated')
     if (gender_status == false) {
         var myElements = document.querySelectorAll('.toggle')
         for (let i = 0; i < myElements.length; i++) {

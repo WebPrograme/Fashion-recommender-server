@@ -3,12 +3,11 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import GlobalMaxPooling2D
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from sklearn.neighbors import NearestNeighbors
+from sklearn import metrics
 import os
 
 import pickle
 import numpy as np
-import pathlib
-import sys
 from numpy.linalg import norm
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -16,29 +15,23 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 model = ResNet50(weights="imagenet", include_top=False,
                  input_shape=(224, 224, 3))
-model.trainable = True
-model = Sequential([model, GlobalMaxPooling2D()])
+#model.trainable = True
+model = Sequential([model, GlobalMaxPooling2D()]) # Faster but less accurate
 
 pick_store = False
 product_status = False
 
-map = os.listdir(pathlib.Path(__file__).parent.resolve())
-map_index = map.index('img_data')
-
-print(os.listdir('app\\' + map[map_index]))
-sys.stdout.flush()
-
-img_files_list = pickle.load(open("img_data\\img_filesWOMEN.pkl", "rb"))
-features_list = pickle.load(open("img_data\\image_features_embeddingWOMEN.pkl", "rb"))
+img_files_list = pickle.load(open(f"img_data\\img_filesWOMEN3.pkl", "rb"))
+features_list = pickle.load(open(f"img_data\\image_features_embeddingWOMEN3.pkl", "rb"))
 
 def process(gender, userID, pageNumber):
     global pick_store, product_status
     if gender == 'WOMEN':
-        img_files_list = pickle.load(open(r".\app\img_data\img_filesWOMEN.pkl", "rb"))
-        features_list = pickle.load(open(r".\app\img_data\image_features_embeddingWOMEN.pkl", "rb"))
+        img_files_list = pickle.load(open(f"img_data\\img_filesWOMEN3.pkl", "rb"))
+        features_list = pickle.load(open(f"img_data\\image_features_embeddingWOMEN3.pkl", "rb"))
     else:
-        img_files_list = pickle.load(open(r".\app\img_data\img_filesMEN.pkl", "rb"))
-        features_list = pickle.load(open(r".\app\img_data\image_features_embeddingMEN.pkl", "rb"))
+        img_files_list = pickle.load(open(f"img_data\\img_filesMEN.pkl", "rb"))
+        features_list = pickle.load(open(f"img_data\\image_features_embeddingMEN.pkl", "rb"))
     features = extract_img_features(f'uploads//{userID}.png', model)
     img_distence, img_indicess = recommendd(features, features_list)
     results = []
@@ -69,4 +62,5 @@ def recommendd(features, features_list):
     neighbors.fit(features_list)
 
     distence, indices = neighbors.kneighbors([features])
+    print(distence[0][:10])
     return distence, indices

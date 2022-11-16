@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#fff">
-    <title>Results | Fashion recommender</title>
+    <title>Results • Fashion recommender</title>
     
     <link rel="stylesheet" href="{{ url_for('static',filename='vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='vendors/css/vendor.bundle.base.css') }}">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/owl-carousel-2/owl.theme.default.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/fontawesome/css/all.css') }}">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/updated.css') }}">
@@ -24,6 +24,16 @@
     <link rel="shortcut icon" href="{{ url_for('static',filename='images/logo small.png') }}">
     <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static',filename='images/logo ios.png') }}">
     <link rel="manifest" href="{{ url_for('static',filename='manifest.json') }}">
+    
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 48
+        }
+    </style>
 </head>
 
 <body>
@@ -51,13 +61,12 @@
                         <li><a target="_blank" href="https://www.bershka.com">Bershka</a></li>
                         <li><a target="_blank" href="https://www.pullandbear.com">Pull&Bear</a></li>
                         <li><a target="_blank" href="https://www.stradivarius.com">Stradivarius</a></li>
-                        <li><a target="_blank" href="https://shop.mango.com/">Mango</a></li>
                     </ul>
                     <ul class="second-store-column">
+                        <li><a target="_blank" href="https://shop.mango.com/">Mango</a></li>
                         <li><a target="_blank" href="https://www.zalando.com">Zalando</a></li>
                         <li><a target="_blank" href="https://www.mostwantednl.nl">Most Wanted</a></li>
                         <li><a target="_blank" href="https://www.wefashion.com">WE</a></li>
-                        <li><a target="_blank" href="https://www.weekday.com">Weekday</a></li>
                         <li><a target="_blank" href="https://www.riverisland.com">River Island</a></li>
                     </ul>
                   </div>
@@ -102,7 +111,7 @@
                             </a>
                             <div id="collapse-privacy-2" class="collapse" role="tabpanel" aria-labelledby="heading-privacy-2" data-bs-parent="#accordion-privacy">
                                 <div class="card-body"> 
-                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (article number, article link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
+                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (product number, product link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
                                 </div>
                             </div>
                         </div>
@@ -131,9 +140,9 @@
                     <p>There are 3 ways to give your input to the programm (plus the gender choose). After you choosed
                         an input, the programm will process your input. This can take a few seconds.</p>
                     <p><strong>Your own image: </strong>use your own image of a clothing piece (the image will be saved!). We recommend to use a white or natural background and <strong class="modal-text-danger">NEVER UPLOAD AN IMAGE WHERE THERE IS A PERSON IN</strong>.</p>
-                    <p><strong>With an article number: </strong>give the article number of your clothing piece. This is
+                    <p><strong>With a product number: </strong>give the product number of your clothing piece. This is
                         only available for a few stores.</p>
-                    <p><strong>With a link: </strong>use the link of a article from a online shop. This is only
+                    <p><strong>With a product link: </strong>use the link of a product from a online shop. This is only
                         available for a few stores.</p>
                     <p>The results consists of 10 clothing pieces of various online stores. You can see the picture of
                         the product and when available, an image of a model wearing the product. You can also click on
@@ -155,7 +164,7 @@
                     <img class="logo-header-img" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
                 </div>
                 <div class="row card-items">
-                    <div class="col-md-3 grid-margin input-card">
+                    <div class="grid-margin input-card">
                         <div class="card">
                             <div class="card-body input-card-body">
                                 <img src="{{ url_for('upload', filename=uploaded_img) }}" id="input-image" class="upload-result">
@@ -183,7 +192,7 @@
                                             id="owl-carousel-basic">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext()">
+                                                    <div class="owl-item" onmouseover="sliderNext()">
                                                         <div class="item">
                                                             {% if product_store_1 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_1) }}" alt="No image is available">
@@ -192,21 +201,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev()">
+                                                    <div class="owl-item" onmouseout="sliderPrev()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_1 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_1) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_1 }} {{ product_number_1 }} {{ product_link_1 }} {{ product_img_1 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_1 %}
                                             <button id="recommendBtn1" onclick="recommend(event, '1')" value="{{ product_number_1 }} {{ product_store_1 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_1_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-1 row recommended-results">
-                                                <a id="recommended_result_1_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_1_img_1"></a>
-                                                <a id="recommended_result_1_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_1_img_2"></a>
-                                                <a id="recommended_result_1_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_1_img_3"></a>
-                                                <a id="recommended_result_1_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_1_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_1_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_1_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_1_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_1_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_1_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_1_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_1_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_1_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-1">Recommended by {{ product_store_1 }}</i>
                                         {% endif %}
@@ -240,7 +252,7 @@
                                             id="owl-carousel-basic-3">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext3()">
+                                                    <div class="owl-item" onmouseover="sliderNext3()">
                                                         <div class="item">
                                                             {% if product_store_3 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_3) }}" alt="No image is available">
@@ -249,21 +261,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev3()">
+                                                    <div class="owl-item" onmouseout="sliderPrev3()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_3 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_3) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_3 }} {{ product_number_3 }} {{ product_link_3 }} {{ product_img_3 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_3 %}
                                             <button id="recommendBtn3" onclick="recommend(event, '3')" value="{{ product_number_3 }} {{ product_store_3 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_3_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-3 row recommended-results">
-                                                <a id="recommended_result_3_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_3_img_1"></a>
-                                                <a id="recommended_result_3_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_3_img_2"></a>
-                                                <a id="recommended_result_3_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_3_img_3"></a>
-                                                <a id="recommended_result_3_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_3_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_3_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_3_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_3_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_3_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_3_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_3_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_3_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_3_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-3">Recommended by {{ product_store_3 }}</i>
                                         {% endif %}
@@ -297,7 +312,7 @@
                                             id="owl-carousel-basic-5">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext5()">
+                                                    <div class="owl-item" onmouseover="sliderNext5()">
                                                         <div class="item">
                                                             {% if product_store_5 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_5) }}" alt="No image is available">
@@ -306,21 +321,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev5()">
+                                                    <div class="owl-item" onmouseout="sliderPrev5()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_5 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_5) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_5 }} {{ product_number_5 }} {{ product_link_5 }} {{ product_img_5 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_5 %}
                                             <button id="recommendBtn5" onclick="recommend(event, '5')" value="{{ product_number_5 }} {{ product_store_5 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_5_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-5 row recommended-results">
-                                                <a id="recommended_result_5_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_5_img_1"></a>
-                                                <a id="recommended_result_5_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_5_img_2"></a>
-                                                <a id="recommended_result_5_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_5_img_3"></a>
-                                                <a id="recommended_result_5_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_5_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_5_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_5_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_5_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_5_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_5_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_5_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_5_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_5_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-5">Recommended by {{ product_store_5 }}</i>
                                         {% endif %}
@@ -354,7 +372,7 @@
                                             id="owl-carousel-basic-7">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext7()">
+                                                    <div class="owl-item" onmouseover="sliderNext7()">
                                                         <div class="item">
                                                             {% if product_store_7 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_7) }}" alt="No image is available">
@@ -363,21 +381,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev7()">
+                                                    <div class="owl-item" onmouseout="sliderPrev7()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_7 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_7) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_7 }} {{ product_number_7 }} {{ product_link_7 }} {{ product_img_7 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_7 %}
                                             <button id="recommendBtn7" onclick="recommend(event, '7')" value="{{ product_number_7 }} {{ product_store_7 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_7_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-7 row recommended-results">
-                                                <a id="recommended_result_7_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_7_img_1"></a>
-                                                <a id="recommended_result_7_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_7_img_2"></a>
-                                                <a id="recommended_result_7_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_7_img_3"></a>
-                                                <a id="recommended_result_7_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_7_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_7_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_7_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_7_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_7_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_7_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_7_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_7_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_7_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-7">Recommended by {{ product_store_7 }}</i>
                                         {% endif %}
@@ -411,7 +432,7 @@
                                             id="owl-carousel-basic-9">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext9()">
+                                                    <div class="owl-item" onmouseover="sliderNext9()">
                                                         <div class="item">
                                                             {% if product_store_9 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_9) }}" alt="No image is available">
@@ -420,21 +441,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev9()">
+                                                    <div class="owl-item" onmouseout="sliderPrev9()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_9 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_9) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_9 }} {{ product_number_9 }} {{ product_link_9 }} {{ product_img_9 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_9 %}
                                             <button id="recommendBtn9" onclick="recommend(event, '9')" value="{{ product_number_9 }} {{ product_store_9 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_9_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-9 row recommended-results">
-                                                <a id="recommended_result_9_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_9_img_1"></a>
-                                                <a id="recommended_result_9_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_9_img_2"></a>
-                                                <a id="recommended_result_9_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_9_img_3"></a>
-                                                <a id="recommended_result_9_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_9_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_9_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_9_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_9_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_9_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_9_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_9_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_9_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_9_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-9">Recommended by {{ product_store_9 }}</i>
                                         {% endif %}
@@ -470,7 +494,7 @@
                                             id="owl-carousel-basic-2">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext2()">
+                                                    <div class="owl-item" onmouseover="sliderNext2()">
                                                         <div class="item">
                                                             {% if product_store_2 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_2) }}" alt="No image is available">
@@ -479,21 +503,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev2()">
+                                                    <div class="owl-item" onmouseout="sliderPrev2()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_2 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_2) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_2 }} {{ product_number_2 }} {{ product_link_2 }} {{ product_img_2 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_2 %}
                                             <button id="recommendBtn2" onclick="recommend(event, '2')" value="{{ product_number_2 }} {{ product_store_2 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_2_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-2 row recommended-results">
-                                                <a id="recommended_result_2_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_2_img_1"></a>
-                                                <a id="recommended_result_2_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_2_img_2"></a>
-                                                <a id="recommended_result_2_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_2_img_3"></a>
-                                                <a id="recommended_result_2_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_2_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_2_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_2_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_2_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_2_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_2_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_2_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_2_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_2_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-2">Recommended by {{ product_store_2 }}</i>
                                         {% endif %}
@@ -527,7 +554,7 @@
                                             id="owl-carousel-basic-4">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext4()">
+                                                    <div class="owl-item" onmouseover="sliderNext4()">
                                                         <div class="item">
                                                             {% if product_store_4 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_4) }}" alt="No image is available">
@@ -536,21 +563,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev4()">
+                                                    <div class="owl-item" onmouseout="sliderPrev4()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_4 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_4) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_4 }} {{ product_number_4 }} {{ product_link_4 }} {{ product_img_4 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_4 %}
                                             <button id="recommendBtn4" onclick="recommend(event, '4')" value="{{ product_number_4 }} {{ product_store_4 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_4_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-4 row recommended-results">
-                                                <a id="recommended_result_4_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_4_img_1"></a>
-                                                <a id="recommended_result_4_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_4_img_2"></a>
-                                                <a id="recommended_result_4_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_4_img_3"></a>
-                                                <a id="recommended_result_4_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_4_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_4_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_4_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_4_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_4_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_4_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_4_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_4_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_4_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-4">Recommended by {{ product_store_4 }}</i>
                                         {% endif %}
@@ -584,7 +614,7 @@
                                             id="owl-carousel-basic-6">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext6()">
+                                                    <div class="owl-item" onmouseover="sliderNext6()">
                                                         <div class="item">
                                                             {% if product_store_6 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_6) }}" alt="No image is available">
@@ -593,21 +623,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev6()">
+                                                    <div class="owl-item" onmouseout="sliderPrev6()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_6 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_6) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_6 }} {{ product_number_6 }} {{ product_link_6 }} {{ product_img_6 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_6 %}
                                             <button id="recommendBtn6" onclick="recommend(event, '6')" value="{{ product_number_6 }} {{ product_store_6 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_6_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-6 row recommended-results">
-                                                <a id="recommended_result_6_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_6_img_1"></a>
-                                                <a id="recommended_result_6_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_6_img_2"></a>
-                                                <a id="recommended_result_6_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_6_img_3"></a>
-                                                <a id="recommended_result_6_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_6_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_6_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_6_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_6_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_6_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_6_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_6_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_6_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_6_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-6">Recommended by {{ product_store_6 }}</i>
                                         {% endif %}
@@ -641,7 +674,7 @@
                                             id="owl-carousel-basic-8">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext8()">
+                                                    <div class="owl-item" onmouseover="sliderNext8()">
                                                         <div class="item">
                                                             {% if product_store_8 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_8) }}" alt="No image is available">
@@ -650,21 +683,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev8()">
+                                                    <div class="owl-item" onmouseout="sliderPrev8()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_8 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_8) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_8 }} {{ product_number_8 }} {{ product_link_8 }} {{ product_img_8 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_8 %}
                                             <button id="recommendBtn8" onclick="recommend(event, '8')" value="{{ product_number_8 }} {{ product_store_8 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_8_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-8 row recommended-results">
-                                                <a id="recommended_result_8_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_8_img_1"></a>
-                                                <a id="recommended_result_8_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_8_img_2"></a>
-                                                <a id="recommended_result_8_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_8_img_3"></a>
-                                                <a id="recommended_result_8_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_8_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_8_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_8_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_8_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_8_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_8_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_8_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_8_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_8_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-8">Recommended by {{ product_store_8 }}</i>
                                         {% endif %}
@@ -698,7 +734,7 @@
                                             id="owl-carousel-basic-10">
                                             <div class="owl-stage-outer">
                                                 <div class="owl-stage result-owl-stage">
-                                                    <div class="owl-item" onmouseenter="sliderNext10()">
+                                                    <div class="owl-item" onmouseover="sliderNext10()">
                                                         <div class="item">
                                                             {% if product_store_10 != 'Stradivarius' %}
                                                                 <img src="{{ url_for('static', filename=product_model_img_10) }}" alt="No image is available">
@@ -707,21 +743,24 @@
                                                             {% endif %}
                                                         </div>
                                                     </div>
-                                                    <div class="owl-item" onmouseleave="sliderPrev10()">
+                                                    <div class="owl-item" onmouseout="sliderPrev10()">
                                                         <div class="item">
-                                                            <img src="{{ product_img_10 }}" alt="No image is available">
+                                                            <img src="{{ url_for('static', filename=product_img_10) }}" alt="No image is available">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="picker-container">
+                                                    <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_10 }} {{ product_number_10 }} {{ product_link_10 }} {{ product_img_10 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                         {% if recommend_avaible_10 %}
                                             <button id="recommendBtn10" onclick="recommend(event, '10')" value="{{ product_number_10 }} {{ product_store_10 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_results_10_arrow" class="fa-solid fa-angle-down"></i></button>
                                             <div class="recommended-results-10 row recommended-results">
-                                                <a id="recommended_result_10_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_10_img_1"></a>
-                                                <a id="recommended_result_10_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_10_img_2"></a>
-                                                <a id="recommended_result_10_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_10_img_3"></a>
-                                                <a id="recommended_result_10_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_10_img_4"></a>
+                                                <a class="recommended_result_link" id="recommended_result_10_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_result_10_img_1"></a>
+                                                <a class="recommended_result_link" id="recommended_result_10_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_result_10_img_2"></a>
+                                                <a class="recommended_result_link" id="recommended_result_10_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_result_10_img_3"></a>
+                                                <a class="recommended_result_link" id="recommended_result_10_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_result_10_img_4"></a>
                                             </div>
                                             <i class="recommended_store_credit text-muted recommended-results-10">Recommended by {{ product_store_10 }}</i>
                                         {% endif %}
@@ -769,19 +808,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_1 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_1) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_1 }} {{ product_number_1 }} {{ product_link_1 }} {{ product_img_1 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_1 %}
                                         <button id="recommendBtn1" onclick="recommendSmall(event, '1')" value="{{ product_number_1 }} {{ product_store_1 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_1_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-1 row recommended-results recommended-small-results">
-                                            <a id="recommended_small_result_1_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_1_img_1"></a>
-                                            <a id="recommended_small_result_1_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_1_img_2"></a>
-                                            <a id="recommended_small_result_1_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_1_img_3"></a>
-                                            <a id="recommended_small_result_1_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_1_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_1_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_1_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_1_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_1_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_1_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_1_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_1_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_1_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-1">Recommended by {{ product_store_1 }}</i>
                                     {% endif %}
@@ -826,19 +868,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_2 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_2) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_2 }} {{ product_number_2 }} {{ product_link_2 }} {{ product_img_2 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_2 %}
                                         <button id="recommendBtn2" onclick="recommendSmall(event, '2')" value="{{ product_number_2 }} {{ product_store_2 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_2_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-2 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_2_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_2_img_1"></a>
-                                            <a id="recommended_small_result_2_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_2_img_2"></a>
-                                            <a id="recommended_small_result_2_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_2_img_3"></a>
-                                            <a id="recommended_small_result_2_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_2_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_2_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_2_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_2_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_2_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_2_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_2_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_2_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_2_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-2">Recommended by {{ product_store_2 }}</i>
                                     {% endif %}
@@ -883,19 +928,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_3 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_3) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_3 }} {{ product_number_3 }} {{ product_link_3 }} {{ product_img_3 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_3 %}
                                         <button id="recommendBtn3" onclick="recommendSmall(event, '3')" value="{{ product_number_3 }} {{ product_store_3 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_3_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-3 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_3_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_3_img_1"></a>
-                                            <a id="recommended_small_result_3_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_3_img_2"></a>
-                                            <a id="recommended_small_result_3_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_3_img_3"></a>
-                                            <a id="recommended_small_result_3_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_3_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_3_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_3_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_3_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_3_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_3_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_3_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_3_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_3_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-3">Recommended by {{ product_store_3 }}</i>
                                     {% endif %}
@@ -940,19 +988,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_4 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_4) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_4 }} {{ product_number_4 }} {{ product_link_4 }} {{ product_img_4 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_4 %}
                                         <button id="recommendBtn4" onclick="recommendSmall(event, '4')" value="{{ product_number_4 }} {{ product_store_4 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_4_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-4 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_4_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_4_img_1"></a>
-                                            <a id="recommended_small_result_4_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_4_img_2"></a>
-                                            <a id="recommended_small_result_4_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_4_img_3"></a>
-                                            <a id="recommended_small_result_4_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_4_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_4_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_4_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_4_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_4_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_4_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_4_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_4_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_4_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-4">Recommended by {{ product_store_4 }}</i>
                                     {% endif %}
@@ -997,19 +1048,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_5 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_5) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_5 }} {{ product_number_5 }} {{ product_link_5 }} {{ product_img_5 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_5 %}
                                         <button id="recommendBtn5" onclick="recommendSmall(event, '5')" value="{{ product_number_5 }} {{ product_store_5 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_5_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-5 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_5_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_5_img_1"></a>
-                                            <a id="recommended_small_result_5_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_5_img_2"></a>
-                                            <a id="recommended_small_result_5_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_5_img_3"></a>
-                                            <a id="recommended_small_result_5_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_5_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_5_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_5_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_5_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_5_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_5_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_5_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_5_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_5_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-5">Recommended by {{ product_store_5 }}</i>
                                     {% endif %}
@@ -1054,19 +1108,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_6 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_6) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_6 }} {{ product_number_6 }} {{ product_link_6 }} {{ product_img_6 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_6 %}
                                         <button id="recommendBtn6" onclick="recommendSmall(event, '6')" value="{{ product_number_6 }} {{ product_store_6 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_6_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-6 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_6_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_6_img_1"></a>
-                                            <a id="recommended_small_result_6_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_6_img_2"></a>
-                                            <a id="recommended_small_result_6_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_6_img_3"></a>
-                                            <a id="recommended_small_result_6_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_6_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_6_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_6_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_6_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_6_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_6_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_6_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_6_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_6_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-6">Recommended by {{ product_store_6 }}</i>
                                     {% endif %}
@@ -1111,19 +1168,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_7 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_7) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_7 }} {{ product_number_7 }} {{ product_link_7 }} {{ product_img_7 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_7 %}
                                         <button id="recommendBtn7" onclick="recommendSmall(event, '7')" value="{{ product_number_7 }} {{ product_store_7 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_7_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-7 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_7_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_7_img_1"></a>
-                                            <a id="recommended_small_result_7_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_7_img_2"></a>
-                                            <a id="recommended_small_result_7_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_7_img_3"></a>
-                                            <a id="recommended_small_result_7_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_7_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_7_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_7_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_7_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_7_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_7_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_7_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_7_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_7_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-7">Recommended by {{ product_store_7 }}</i>
                                     {% endif %}
@@ -1168,19 +1228,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_8 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_8) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_8 }} {{ product_number_8 }} {{ product_link_8 }} {{ product_img_8 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_8 %}
                                         <button id="recommendBtn8" onclick="recommendSmall(event, '8')" value="{{ product_number_8 }} {{ product_store_8 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_8_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-8 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_8_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_8_img_1"></a>
-                                            <a id="recommended_small_result_8_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_8_img_2"></a>
-                                            <a id="recommended_small_result_8_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_8_img_3"></a>
-                                            <a id="recommended_small_result_8_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_8_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_8_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_8_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_8_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_8_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_8_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_8_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_8_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_8_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-8">Recommended by {{ product_store_8 }}</i>
                                     {% endif %}
@@ -1225,19 +1288,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_9 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_9) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_9 }} {{ product_number_9 }} {{ product_link_9 }} {{ product_img_9 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_9 %}
                                         <button id="recommendBtn9" onclick="recommendSmall(event, '9')" value="{{ product_number_9 }} {{ product_store_9 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_9_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-9 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_9_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_9_img_1"></a>
-                                            <a id="recommended_small_result_9_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_9_img_2"></a>
-                                            <a id="recommended_small_result_9_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_9_img_3"></a>
-                                            <a id="recommended_small_result_9_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_9_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_9_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_9_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_9_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_9_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_9_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_9_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_9_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_9_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-9">Recommended by {{ product_store_9 }}</i>
                                     {% endif %}
@@ -1282,19 +1348,22 @@
                                                 </div>
                                                 <div class="owl-item">
                                                     <div class="item product-img">
-                                                        <img src="{{ product_img_10 }}" alt="No image is available">
+                                                        <img src="{{ url_for('static', filename=product_img_10) }}" alt="No image is available">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="picker-container">
+                                            <button title="Add to your favorites" onclick="wish(event, this.value)" value="{{ product_store_10 }} {{ product_number_10 }} {{ product_link_10 }} {{ product_img_10 }}" class="btn-picker"><span class="material-symbols-outlined">favorite</span></button>
                                         </div>
                                     </div>
                                     {% if recommend_avaible_10 %}
                                         <button id="recommendBtn10" onclick="recommendSmall(event, '10')" value="{{ product_number_10 }} {{ product_store_9 }}" class="btn btn-lg btn-block btn-primary btn-fw battle__card__submit__btn get-the-look-btn">Get the look <i id="recommended_small_results_10_arrow" class="fa-solid fa-angle-down"></i></button>
                                         <div class="recommended-small-results-10 row recommended-small-results recommended-results">
-                                            <a id="recommended_small_result_10_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_10_img_1"></a>
-                                            <a id="recommended_small_result_10_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_10_img_2"></a>
-                                            <a id="recommended_small_result_10_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_10_img_3"></a>
-                                            <a id="recommended_small_result_10_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_10_img_4"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_10_link_1" target="_blank"><img class="recommend_result_img recommend_result_img_top_left" id="recommended_small_result_10_img_1"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_10_link_2" target="_blank"><img class="recommend_result_img recommend_result_img_top_right" id="recommended_small_result_10_img_2"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_10_link_3" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_left" id="recommended_small_result_10_img_3"></a>
+                                            <a class="recommended_result_link" id="recommended_small_result_10_link_4" target="_blank"><img class="recommend_result_img recommend_result_img_bottom_right" id="recommended_small_result_10_img_4"></a>
                                         </div>
                                         <i class="recommended_store_credit text-muted recommended-small-results-10">Recommended by {{ product_store_10 }}</i>
                                     {% endif %}
@@ -1318,11 +1387,29 @@
                     </a>
                 </div>
             </div>
-            <form class="change_page_form" action="{{ url_for('next_page') }}" method="post">
+
+            <input id="share-id" type="hidden" value="{{ UserID }}">
+            <input id="share-store" type="hidden" value="{{ share_store }}">
+            <input id="share-content" type="hidden" value="{{ share_content }}">
+            <input id="share-method" type="hidden" value="{{ share_method }}">
+
+            <form class="change_page_form" action="{{ url_for('next_page') }}" method="post" id="next-form">
                 <input type="hidden" name="id" value="{{ UserID }}">
                 <input type="hidden" name="gender" value="{{ gender }}">
-                <button type="submit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn footer-btn">Show second page</button>
+
+                <input name="share-store" type="hidden" value="{{ share_store }}">
+                <input name="share-content" type="hidden" value="{{ share_content }}">
+                <input name="share-method" type="hidden" value="{{ share_method }}">
             </form>
+            
+            <div class="row footer-btn-row">
+                <button type="submit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn footer-btn col-md-6" form="next-form">Show second page</button>
+
+                {% if share_method != '' %}
+                    <button type="submit" class="btn btn-lg upload-btn btn-block btn-secondary btn-fw battle__card__submit__btn share-btn footer-btn col-md-6">Share</button>
+                {% endif %}
+            </div>
+
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center flex-column">
                     <span class="text-muted row text-center footer-links">
@@ -1350,18 +1437,13 @@
     <script src="{{ url_for('static',filename='js/dashboard.js') }}"> </script>
     <script src="{{ url_for('static',filename='js/reset.js') }}"> </script>
     <script src="{{ url_for('static',filename='js/recommend.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/wish.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/share.js') }}"> </script>
 
     <script>
         $(window).on('load', function () {
             $('.loader-background').hide();
         })
-        
-        UserID = "{{ UserID }}";
-        Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(() => {
-            var request = new XMLHttpRequest();
-            request.open("GET", "/reset" + UserID, true);
-            request.send();
-        });
     </script>  
 </body>
 

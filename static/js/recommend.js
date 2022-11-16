@@ -31,21 +31,54 @@ function recommend(event, index) {
         request.send();
         request.onreadystatechange = function () {
             data = JSON.parse(request.response)['result'];
+            count = 0;
+
+            if (data == 'No results found') {
+                document.getElementById('recommended_result_' + index + '_link_1').style.display = 'none';
+                document.getElementById('recommended_result_' + index + '_link_2').style.display = 'none';
+                document.getElementById('recommended_result_' + index + '_link_3').style.display = 'none';
+                document.getElementById('recommended_result_' + index + '_link_4').style.display = 'none';
+                return;
+            }
 
             var elements = document.querySelectorAll('.recommended-results-' + index);
             for (var i = 0; i < elements.length; i++) {
                 elements[i].style.display = 'flex';
             }
 
-            document.getElementById('recommended_result_' + index + '_img_1').src = data['img'][0];
-            document.getElementById('recommended_result_' + index + '_img_2').src = data['img'][1];
-            document.getElementById('recommended_result_' + index + '_img_3').src = data['img'][2];
-            document.getElementById('recommended_result_' + index + '_img_4').src = data['img'][3];
+            for (var i = 0; i < data['img'].length; i++) {
+                document.getElementById('recommended_result_' + index + '_link_' + (i + 1)).href = data['link'][i];
+                document.getElementById('recommended_result_' + index + '_link_' + (i + 1)).style.display = 'block';
+
+                document.getElementById('recommended_result_' + index + '_img_' + (i + 1)).src = data['img'][i];
+                count++;
+            }
+
+            for (var i = count; i < 4; i++) {
+                document.getElementById('recommended_result_' + index + '_link_' + (i + 1)).style.display = 'none';
+                document.getElementById('recommended_result_' + index + '_img_' + (i + 1)).src = '';
+            }
+
+            if (count == 1) {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].style.justifyContent  = 'center';
+                }
+                document.getElementById('recommended_result_' + index + '_img_1').style.borderRadius = '4px';
+            } else if (count == 2) {
+                document.getElementById('recommended_result_' + index + '_img_1').style.borderTopLeftRadius = '4px';
+                document.getElementById('recommended_result_' + index + '_img_1').style.borderBottomLeftRadius = '4px';
+                document.getElementById('recommended_result_' + index + '_img_2').style.borderTopRightRadius = '4px';
+                document.getElementById('recommended_result_' + index + '_img_2').style.borderBottomRightRadius = '4px';
+            } else if (count == 3) {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].style.justifyContent  = 'space-around';
+                }        
+                document.getElementById('recommended_result_' + index + '_img_3').style.borderBottomLeftRadius = '4px';
+                document.getElementById('recommended_result_' + index + '_img_3').style.borderBottomRightRadius = '4px';
+            }
             
-            document.getElementById('recommended_result_' + index + '_link_1').href = data['link'][0];
-            document.getElementById('recommended_result_' + index + '_link_2').href = data['link'][1];
-            document.getElementById('recommended_result_' + index + '_link_3').href = data['link'][2];
-            document.getElementById('recommended_result_' + index + '_link_4').href = data['link'][3];
+            var dummy = document.querySelector('.recommended-results-' + index).children[0]
+            dummy.style.display = 'none';
         }
     }
 }
@@ -68,21 +101,51 @@ function recommendSmall(event, index) {
         request.send();
         request.onreadystatechange = function () {
             data = JSON.parse(request.response)['result'];
+            count = 0;
+
+            if (data == 'No results found') {
+                document.getElementById('recommended_small_result_' + index + '_link_1').style.display = 'none';
+                document.getElementById('recommended_small_result_' + index + '_link_2').style.display = 'none';
+                document.getElementById('recommended_small_result_' + index + '_link_3').style.display = 'none';
+                document.getElementById('recommended_small_result_' + index + '_link_4').style.display = 'none';      
+                return;          
+            }
 
             var elements = document.querySelectorAll('.recommended-small-results-' + index);
             for (var i = 0; i < elements.length; i++) {
                 elements[i].style.display = 'flex';
             }
-
-            document.getElementById('recommended_small_result_' + index + '_img_1').src = data['img'][0];
-            document.getElementById('recommended_small_result_' + index + '_img_2').src = data['img'][1];
-            document.getElementById('recommended_small_result_' + index + '_img_3').src = data['img'][2];
-            document.getElementById('recommended_small_result_' + index + '_img_4').src = data['img'][3];
             
-            document.getElementById('recommended_small_result_' + index + '_link_1').href = data['link'][0];
-            document.getElementById('recommended_small_result_' + index + '_link_2').href = data['link'][1];
-            document.getElementById('recommended_small_result_' + index + '_link_3').href = data['link'][2];
-            document.getElementById('recommended_small_result_' + index + '_link_4').href = data['link'][3];
+            for (var i = 0; i < data['img'].length; i++) {
+                document.getElementById('recommended_small_result_' + index + '_link_' + (i + 1)).href = data['link'][i];
+                document.getElementById('recommended_small_result_' + index + '_link_' + (i + 1)).style.display = 'block';
+                
+                document.getElementById('recommended_small_result_' + index + '_img_' + (i + 1)).src = data['img'][i];
+                count++;
+            }
+
+            for (var i = count; i < 4; i++) {
+                document.getElementById('recommended_small_result_' + index + '_link_' + (i + 1)).style.display = 'none';
+                document.getElementById('recommended_small_result_' + index + '_img_' + (i + 1)).src = '';
+            }
+
+            if (count == 1) {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].style.justifyContent  = 'center';
+                }
+                document.getElementById('recommended_small_result_' + index + '_img_1').style.borderRadius = '4px';
+            } else if (count == 2) {
+                document.getElementById('recommended_small_result_' + index + '_img_1').style.borderTopLeftRadius = '4px';
+                document.getElementById('recommended_small_result_' + index + '_img_1').style.borderBottomLeftRadius = '4px';
+                document.getElementById('recommended_small_result_' + index + '_img_2').style.borderTopRightRadius = '4px';
+                document.getElementById('recommended_small_result_' + index + '_img_2').style.borderBottomRightRadius = '4px';
+            } else if (count == 3) {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].style.justifyContent  = 'space-around';
+                }        
+                document.getElementById('recommended_small_result_' + index + '_img_3').style.borderBottomLeftRadius = '4px';
+                document.getElementById('recommended_small_result_' + index + '_img_3').style.borderBottomRightRadius = '4px';
+            }
             
             var dummy = document.querySelector('.recommended-small-results-' + index).children[0]
             dummy.style.display = 'none';

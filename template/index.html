@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/owl-carousel-2/owl.theme.default.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vendors/fontawesome/css/all.css') }}">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/updated.css') }}">
@@ -25,6 +25,16 @@
     <link rel="shortcut icon" href="{{ url_for('static',filename='images/logo small.png') }}">
     <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static',filename='images/logo ios.png') }}">
     <link rel="manifest" href="{{ url_for('static',filename='manifest.json') }}">
+    
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 48
+        }
+    </style>
 </head>
 
 <body>
@@ -36,7 +46,7 @@
             <p>This can take a few seconds</p>
         </span>
     </div>
-
+    
     <div class="modal fade" id="cookiesBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="cookiesdropLabel" aria-hidden="true"  data-keyboard="false">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -69,7 +79,7 @@
                             </a>
                             <div id="collapse-2" class="collapse" role="tabpanel" aria-labelledby="heading-2" data-bs-parent="#accordion">
                                 <div class="card-body"> 
-                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (article number, article link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
+                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (product number, product link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
                                 </div>
                             </div>
                         </div>
@@ -117,7 +127,7 @@
                             </a>
                             <div id="collapse-privacy-2" class="collapse" role="tabpanel" aria-labelledby="heading-privacy-2" data-bs-parent="#accordion-privacy">
                                 <div class="card-body"> 
-                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (article number, article link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
+                                    <p>If you use this webiste and choose an input option, the image that you uploaded or that we extracted by the hand of your input (product number, product link or/and store) will be saved on the server with your unique id as name. The image can only be linked to your device because the unique id can only be saved on the user's device and NOT on the server.</p> 
                                 </div>
                             </div>
                         </div>
@@ -169,9 +179,9 @@
                     <p>There are 3 ways to give your input to the programm (plus the gender choose). After you choosed
                         an input, the programm will process your input. This can take a few seconds.</p>
                     <p><strong>Your own image: </strong>use your own image of a clothing piece (the image will be saved!). We recommend to use a white or natural background and <strong class="modal-text-danger">NEVER UPLOAD AN IMAGE WHERE THERE IS A PERSON IN</strong>.</p>
-                    <p><strong>With an article number: </strong>give the article number of your clothing piece. This is
+                    <p><strong>With a product number: </strong>give the product number of your clothing piece. This is
                         only available for a few stores.</p>
-                    <p><strong>With a link: </strong>use the link of a article from a online shop. This is only
+                    <p><strong>With a product link: </strong>use the link of a product from a online shop. This is only
                         available for a few stores.</p>
                     <p>The results consists of 10 clothing pieces of various online stores. You can see the picture of
                         the product and when available, an image of a model wearing the product. You can also click on
@@ -226,11 +236,11 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="numberBackdropLabel">Article number</h5>
+                    <h5 class="modal-title" id="numberBackdropLabel">Product number</h5>
                     <p type="button" data-bs-dismiss="modal">Close</p>
                 </div>
                 <div class="modal-body">
-                    <p><strong>With an article number: </strong>give the article number of your clothing piece. This is
+                    <p><strong>With a product number: </strong>give the product number of your clothing piece. This is
                         only available for the following stores:</p>
                     <div class="row justify-content-sm-left">
                         <ul>
@@ -268,11 +278,11 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="linkBackdropLabel">Article link</h5>
+                    <h5 class="modal-title" id="linkBackdropLabel">Product link</h5>
                     <p type="button" data-bs-dismiss="modal">Close</p>
                 </div>
                 <div class="modal-body">
-                    <p><strong>With a link: </strong>use the link of a article from a online shop. This is only
+                    <p><strong>With a product link: </strong>use the link of a product from a online shop. This is only
                         available for the following stores:</p>
                     <div class="row justify-content-sm-left">
                         <ul>
@@ -289,6 +299,7 @@
                         </ul>
                         <ul class="second-store-column">
                             <li><a target="_blank" href="https://shop.mango.com/">Mango</a></li>
+                            <li><a target="_blank" href="https://en.aboutyou.de/">About You</a> *</li>
                             <li><a target="_blank" href="https://www.vrggrl.com">VRG GRL</a> *</li>
                             <li><a target="_blank" href="https://www.c-and-a.com">C&A</a> *</li>
                             <li><a target="_blank" href="https://www.newyorker.de">New Yorker</a> *</li>
@@ -329,6 +340,83 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="ready2goBackdrop" data-bs-backdrop="ready2go" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ready2goBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h6 class="modal-title" id="ready2goBackdropLabel">Ready2Go Images</h6>
+                        <h6 class="text-muted modal-title-description">Click on an image to use as input</h6>
+                    </div>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <div class="scroll-shadow-top"></div>
+                    <div class="row">
+                        <div class="ready2go-column">
+                            {% for index in range(0, len) %}
+                                {% if index < 10 %}
+                                    <div class="grid-margin ready2go-card" title="Click to use this image" data-title="{{ product_store[index] }} {{ product_number[index] }}" name="1">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <img src="{{ url_for('static', filename=product_img[index]) }}" alt="No image is available" class="forselected-img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="ready2go-column">
+                            {% for index in range(0, len) %}
+                                {% if index >= 10 %}
+                                    <div class="grid-margin ready2go-card" title="Click to use this image" data-title="{{ product_store[index] }} {{ product_number[index] }}" name="1">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <img src="{{ url_for('static', filename=product_img[index]) }}" alt="No image is available" class="forselected-img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>                    
+                    <div class="scroll-shadow-bottom"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade wish-modal" id="wishBackdrop" data-bs-backdrop="wish" data-bs-keyboard="false" tabindex="-1" aria-labelledby="wishBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h6 class="modal-title" id="wishBackdropLabel">Favorites</h6>
+                        <h6 class="text-muted modal-title-description">Here you can find all your favorite items</h6>
+                    </div>
+                    <p type="button" data-bs-dismiss="modal">Close</p>
+                </div>
+                <div class="modal-body">
+                    <div class="wish-scroll-shadow-top"></div>
+                    <div class="wish-empty">
+                        <i class="fa-solid fa-heart-crack"></i>
+                        <h5>You don't have any favorites yet</h5>
+                    </div>
+                    <div class="row wish-items">
+                        
+                    </div>
+                    <div class="wish-scroll-shadow-bottom"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
@@ -352,6 +440,7 @@
                                     <p class="dark {{ dark_status }}">Men</p>
                                 </div>
                             </label>
+                            <a data-bs-toggle="modal" data-bs-target="#wishBackdrop" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn wish-btn" target="_blank"><i class="fa-solid fa-heart wish-btn-icon"></i><span class="wish-btn-text"> Favorites</span></a>
                         </div>
                     </div>
                 </div>
@@ -391,9 +480,7 @@
                                     <h2 class="page-title or-title">OR</h2>
                                 </div>
                                 <div class="line or-line"></div> 
-                                <button 
-                                    class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn forselected-show-btn readytogo-btn"
-                                    >READY TO GO IMAGES</button>
+                                <button class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn readytogo-btn"data-bs-toggle="modal" data-bs-target="#ready2goBackdrop">READY2GO IMAGES</button>
                             </div>
                         </div>
                     </div>
@@ -402,7 +489,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-row justify-content-between">
-                                        <h4 class="card-title">article link</h4>
+                                        <h4 class="card-title">product link</h4>
                                         <span class="material-symbols-outlined tooltip-icon help-icon" data-bs-toggle="modal"
                                             data-bs-target="#linkBackdrop">help</span>
                                     </div>
@@ -415,14 +502,14 @@
                                                   <span class="input-group-text"><i class="fa-solid fa-link"></i></span>
                                                 </div>
                                                 <input name="link" type="text" class="form-control" id="articleLink"
-                                                    placeholder="Link of article">
+                                                    placeholder="Product link">
                                             </div>
                                             <p></p>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                   <span class="input-group-text"><i class="fa-solid fa-store"></i></span>
                                                 </div>
-                                                <select name="store" class="form-control" onchange="document.getElementById('link-confirm-btn').disabled = false">
+                                                <select name="store" class="form-control" id="link-store-select" onchange="document.getElementById('link-confirm-btn').disabled = false">
                                                     <option selected disabled hidden>Choose a store</option>
                                                     <option disabled>Most accurate:</option>
                                                     <option>H&M</option>
@@ -437,6 +524,7 @@
                                                     <option>Reserved</option>
                                                     <option>Mango</option>
                                                     <option disabled>Least accurate:</option>
+                                                    <option>About You</option>
                                                     <option>C&A</option>
                                                     <option>New Yorker</option>
                                                     <option>American Eagle</option>
@@ -449,8 +537,8 @@
                                             </div>
                                             <p></p>
 
-                                            <button type="submit" value="Submit" name="BtnSubmit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
-                                                onclick="loading();" id="link-confirm-btn" disabled>CONFIRM</button>
+                                            <button type="submit" value="Submit" name="BtnSubmit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn submit-btn"
+                                                onclick="loading();" id="link-confirm-btn" disabled>CONTINUE</button>
                                         </form>
                                     </div>
                                 </div>
@@ -460,7 +548,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-row justify-content-between">
-                                        <h4 class="card-title">article number</h4>
+                                        <h4 class="card-title">product number</h4>
                                         <span class="material-symbols-outlined tooltip-icon help-icon" data-bs-toggle="modal"
                                             data-bs-target="#numberBackdrop">help</span>
                                     </div>
@@ -473,7 +561,7 @@
                                                     <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
                                                 </div>
                                                 <input name="number" type="text" class="form-control" id="articleNumber"
-                                                placeholder="Article number">
+                                                placeholder="Product number">
                                             </div>
                                             <p></p>
                                             <div class="input-group">
@@ -503,8 +591,8 @@
                                             </div>
                                             <p></p>
 
-                                            <button type="submit" value="Submit" name="BtnSubmit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn"
-                                                onclick="loading();" id="number-confirm-btn" disabled>CONFIRM</button>
+                                            <button type="submit" value="Submit" name="BtnSubmit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn submit-btn"
+                                                onclick="loading();" id="number-confirm-btn" disabled>CONTINUE</button>
                                         </form>
                                     </div>
                                 </div>
@@ -512,53 +600,20 @@
                         </div>
                     </div>
                 </div>
+
+                <div class=" row">
+                </div>
+
+                <form class="change_page_form" action="{{ url_for('prev_page') }}" method="post" id="hidden-pick-form">
+                    <input type="hidden" name="id" id="wish-id" value="{{ UserID }}">
+                    <input type="hidden" name="gender" value="women">
+                    <button type="submit" class="btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn footer-btn" id="picker-prev">Show second page</button>
+                </form>
+
                 <form class="display-none" method="post" id="forselected-form" action="/predict/" enctype="multipart/form-data">
                     <input name="UserID" type="text" class="useridInput">
                     <input type="text" name="forselected-input" id="forselected-input">
                 </form>
-                <div class="forselected-container">
-                    <div class="page-header forselected-header">
-                            <h2 class="page-title">Ready to go images</h2>
-                            <span style="line-height: .9;" class=" material-symbols-outlined tooltip-icon results-help-icon" data-bs-toggle="modal" data-bs-target="#forselectedBackdrop">help</span>
-                    </div>
-                    
-                    <div class="owl-carousel owl-theme full-width owl-carousel-dash portfolio-carousel owl-loaded owl-drag forselected-container" id="owl-carousel-recommended">
-                        <div class="owl-stage-outer">
-                            <div class="owl-stage result-owl-stage">
-                                {% for index in range(0, len) %}
-                                    <div class="owl-item">
-                                        <div class="item">           
-                                            <div class="col-md-4 col-xl-4 grid-margin recommended-card">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <img src="{{ url_for('static', filename=product_img[index]) }}" alt="No image is available" class="forselected-img">
-                                                        <div class="white-space"></div>
-                                                        <button value="{{ product_store[index] }} {{ product_number[index] }}" name="1" type="button" class="forselected-btn btn btn-lg upload-btn btn-block btn-primary btn-fw battle__card__submit__btn">PICK</button>
-                                                        <div class="d-flex py-4 results-card-bottom">
-                                                            <div class="preview-list w-100">
-                                                                <div class="preview-item p-0">
-                                                                    <div class="preview-item-content d-flex flex-grow">
-                                                                        <div class="flex-grow">
-                                                                            <div class="d-flex d-md-block d-xl-flex justify-content-between">
-                                                                                <h6 class="preview-subject">{{ product_number_1 }}</h6>
-                                                                            </div>
-                                                                            <a {{ product_link_1 }} class="text-muted">Check the product on {{ product_store_1 }}!</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>        
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="owl-dots"></div>
-                    </div>
-                </div>
             </div>
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center flex-column">
@@ -586,57 +641,24 @@
     <script src="{{ url_for('static',filename='js/settings.js') }}"> </script>
     <script src="{{ url_for('static',filename='js/gender.js') }}"> </script>
     <script src="{{ url_for('static',filename='js/uuid.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/wishModal.js') }}"> </script>
     <script src="{{ url_for('static',filename='js/recommend.js') }}"> </script>
     <script src="{{ url_for('static',filename='js/dashboard.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/slider.js') }}"> </script>
+    <script src="{{ url_for('static',filename='js/autostore.js') }}"> </script>
 
     <script>
-        forselected_status = false
         function loading() {
             $('.loader-background').show();
+            document.body.style.cursor = 'wait';
         }
+
         $(window).on('load', function () {
             $('.loader-background').hide();
+            document.body.style.cursor = 'default';
         })
-        document.querySelectorAll('.forselected-btn').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                loading()
-                document.getElementById('forselected-input').value = anchor.value
-                document.getElementById('forselected-form').submit()
-            });
-        });
-        document.querySelectorAll('.forselected-show-btn').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                if (forselected_status == false) {
-                    document.querySelector('.forselected-container').style.display = 'block';
-                    document.querySelector('.forselected-container').scrollIntoView();
-                    forselected_status = true
-                } else {
-                    document.querySelector('.forselected-container').style.display = 'none';
-                    forselected_status = false
-                }
-            });
-        });
     </script>
     <script type="module">
-        $(document).ready(function () {
-            // Check if user saw the modal
-            var key = 'UserAgreed',
-                userChoice = localStorage.getItem('UserAgreed');
-                UserID = localStorage.getItem('UserID');
-            // Show the modal only if new user
-            if (!userChoice) {
-                $('#cookiesBackdrop').modal('show');
-            } else {        
-                var myElements = document.querySelectorAll('.useridInput')
-                for (let i = 0; i < myElements.length; i++) {
-                    myElements[i].value = UserID;
-                }
-                var request = new XMLHttpRequest();
-                request.open("GET", "/full_reset" + UserID, true);
-                request.send();
-            }
-        });
-
         document.getElementById("upload-input").addEventListener("change", function (e) {
             loading()
             document.getElementById('uploader').submit()

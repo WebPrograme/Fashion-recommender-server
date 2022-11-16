@@ -1,1 +1,10 @@
-env
+blacklist
+model_img
+results
+bin
+uploads
+fontawesome
+pullbear_watermark.png
+log.txt
+image_features_embeddingWOMEN.pkl
+__pycache__

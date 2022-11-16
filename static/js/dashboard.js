@@ -201,34 +201,6 @@
         plugins: transactionhistoryChartPlugins
       });
     }
-    if ($('#owl-carousel-recommended').length) {
-        $('#owl-carousel-recommended').owlCarousel({
-          loop: true,
-          nav: false,
-          dots: true,
-          autoplay: true,
-          autoplayTimeout: 4500,
-          navText: ['<i class="fa-solid fa-angle-left"></i>', '<i class="fa-solid fa-angle-right"></i>'],
-          smartSpeed: 300,
-          responsive: {
-            0: {
-              items: 1
-            },
-            380: {
-              items: 2
-            },
-            550: {
-              items: 2
-            },
-            768: {
-              items: 3
-            },
-            1000: {
-              items: 3
-            }
-          }
-        });
-    }
     if ($('#owl-carousel-basic').length) {
       $('#owl-carousel-basic').owlCarousel({
         loop: true,
@@ -509,19 +481,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false,
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -536,19 +513,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -563,19 +545,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -590,19 +577,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -617,19 +609,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -644,19 +641,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -671,19 +673,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -698,19 +705,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -725,19 +737,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });
@@ -752,19 +769,24 @@
         navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
         responsive: {
           0: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           380: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           550: {
-            items: 2
+            items: 2,
+            touchDrag: false
           },
           768: {
-            items: 1
+            items: 1,
+            touchDrag: true
           },
           1000: {
-            items: 1
+            items: 1,
+            touchDrag: true
           }
         }
       });

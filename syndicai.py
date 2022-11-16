@@ -6,22 +6,21 @@ import random
 from argparse import ArgumentParser
 
 import click
-import sys
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, flash, redirect, render_template, request, send_from_directory, url_for
 from flask_cors import CORS, cross_origin
 from PIL import Image
+from rich.console import Console
 
 import model
 
-print('[INFO] [{}] -- Starting app'.format(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
-sys.stdout.flush()
-
 app = Flask('Fashion recommender', template_folder='template')
 dev_status = False
+console = Console()
+error_console = Console(stderr=True, style="bold red")
 
-express_color_list_file = open(r'.\\static\\data\\express_color_list.json', 'r')
+express_color_list_file = open(f'static\\data\\express_color_list.json', 'r')
 express_color_list = json.load(express_color_list_file)['colors']
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36', 
@@ -31,7 +30,42 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36
            "Accept-Language": "en-US,en;q=0.5",
            "Accept-Encoding": "gzip, deflate"}
 
-forselectedItems = ['fashion_pullbear//women\\4245361603.webp',
+forselectedItems = ['fashion_bershka//women\\0581666603.webp',
+                    'fashion_bershka//women\\0847810920.webp',
+                    'fashion_bershka//women\\1305354615.webp',
+                    'fashion_bershka//women\\1618200400.webp',
+                    'fashion_bershka//women\\1619200806.webp',
+                    'fashion_bershka//women\\2562033807.webp',
+                    'fashion_bershka//women\\2569492800.webp',
+                    'fashion_bershka//women\\3315187800.webp',
+                    'fashion_bershka//women\\4048694800.webp',
+                    'fashion_bershka//women\\7603777514.webp',
+                    'fashion_bershka//women\\2317381800.webp',
+                    'fashion_bershka//women\\0045969428.webp',
+                    'fashion_bershka//women\\0054969433.webp',
+                    'fashion_bershka//women\\0035352400.webp',
+                    'fashion_hm//women\\0940771016.webp',
+                    'fashion_hm//women\\0981815007.webp',
+                    'fashion_hm//women\\0982361008.webp',
+                    'fashion_hm//women\\0994907004.webp',
+                    'fashion_hm//women\\1018158008.webp',
+                    'fashion_hm//women\\1021205001.webp',
+                    'fashion_hm//women\\1026309002.webp',
+                    'fashion_hm//women\\1028353003.webp',
+                    'fashion_hm//women\\1031889003.webp',
+                    'fashion_hm//women\\1042266001.webp',
+                    'fashion_hm//women\\1042286003.webp',
+                    'fashion_hm//women\\1048732001.webp',
+                    'fashion_mango//women\\2701826099.webp',
+                    'fashion_mango//women\\2702252679.webp',
+                    'fashion_mango//women\\2705576191.webp',
+                    'fashion_mango//women\\2708476650.webp',
+                    'fashion_mango//women\\2708288382.webp',
+                    'fashion_mango//women\\2709712743.webp',
+                    'fashion_mango//women\\2707475849.webp',
+                    'fashion_mango//women\\27022512TC.webp',
+                    'fashion_mango//women\\27021097TC.webp',
+                    'fashion_pullbear//women\\4245361603.webp',
                     'fashion_pullbear//women\\4240362424.webp',
                     'fashion_pullbear//women\\4245317751.webp',
                     'fashion_pullbear//women\\4245386445.webp',
@@ -63,9 +97,110 @@ forselectedItems = ['fashion_pullbear//women\\4245361603.webp',
                     'fashion_pullbear//women\\4549309430.webp',
                     'fashion_pullbear//women\\4390360800.webp',
                     'fashion_pullbear//women\\4246332515.webp',
-                    'fashion_pullbear//women\\4245376500.webp']
+                    'fashion_pullbear//women\\4245376500.webp',
+                    'fashion_stradivarius//women\\0709203042.webp',
+                    'fashion_stradivarius//women\\0927029552.webp',
+                    'fashion_stradivarius//women\\2051876001.webp',
+                    'fashion_stradivarius//women\\2120225145.webp',
+                    'fashion_stradivarius//women\\2110419001.webp',
+                    'fashion_stradivarius//women\\2386228001.webp',
+                    'fashion_stradivarius//women\\2616512340.webp',
+                    'fashion_stradivarius//women\\2619836250.webp',
+                    'fashion_stradivarius//women\\5918583145.webp',
+                    'fashion_stradivarius//women\\7006820341.webp',
+                    'fashion_stradivarius//women\\7010186010.webp',
+                    'fashion_stradivarius//women\\7168120045.webp',
+                    'fashion_stradivarius//women\\7341168700.webp',
+                    'fashion_stradivarius//women\\7346216700.webp',
+                    'fashion_stradivarius//women\\8828132001.webp',
+                    'fashion_stradivarius//women\\8817155411.webp',
+                    'fashion_stradivarius//women\\7100184400.webp',
+                    'fashion_stradivarius//women\\7093130422.webp',
+                    'fashion_stradivarius//women\\2663663001.webp',
+                    'fashion_stradivarius//women\\2504571400.webp',
+                    'fashion_stradivarius//women\\0861026144.webp',
+                    'fashion_stradivarius//women\\0894063004.webp',
+                    'fashion_stradivarius//women\\1362768702.webp',
+                    'fashion_zara//women\\3067418.webp',
+                    'fashion_zara//women\\3253320.webp',
+                    'fashion_zara//women\\4387312.webp',
+                    'ready2go//women\\1.webp',
+                    'ready2go//women\\2.webp',
+                    'ready2go//women\\3.webp',
+                    'ready2go//women\\4.webp',
+                    'ready2go//women\\5.webp',
+                    'ready2go//women\\6.webp',
+                    'ready2go//women\\7.webp',
+                    'ready2go//women\\8.webp',
+                    'ready2go//women\\9.webp',
+                    'ready2go//women\\10.webp',
+                    'ready2go//women\\11.webp',
+                    'ready2go//women\\12.webp',
+                    'ready2go//women\\13.webp',
+                    'ready2go//women\\14.webp',
+                    'ready2go//women\\15.webp',
+                    'ready2go//women\\16.webp',
+                    'ready2go//women\\17.webp',
+                    'ready2go//women\\18.webp',
+                    'ready2go//women\\19.webp',
+                    'ready2go//women\\20.webp',
+                    'ready2go//women\\21.webp',
+                    'ready2go//women\\22.webp',
+                    'ready2go//women\\23.webp',
+                    'ready2go//women\\24.webp',
+                    'ready2go//women\\25.webp',
+                    'ready2go//women\\26.webp',
+                    'ready2go//women\\27.webp',
+                    'ready2go//women\\28.webp',
+                    'ready2go//women\\29.webp',
+                    'ready2go//women\\30.webp',
+                    'ready2go//women\\31.webp',
+                    'ready2go//women\\32.webp',
+                    'ready2go//women\\33.webp',
+                    'ready2go//women\\34.webp',
+                    'ready2go//women\\35.webp',
+                    'ready2go//women\\36.webp',
+                    'ready2go//women\\37.webp',
+                    'ready2go//women\\38.webp',
+                    'ready2go//women\\39.webp',
+                    'ready2go//women\\40.webp',
+                    'ready2go//women\\41.webp',
+                    'ready2go//women\\42.webp',
+                    'ready2go//women\\43.webp',
+                    'ready2go//women\\44.webp',
+                    'ready2go//women\\45.webp',
+                    'ready2go//women\\46.webp',
+                    'ready2go//women\\47.webp',
+                    'ready2go//women\\48.webp',
+                    'ready2go//women\\49.webp',
+                    'ready2go//women\\50.webp',
+                    'ready2go//women\\51.webp',
+                    'ready2go//women\\52.webp',
+                    'ready2go//women\\53.webp',
+                    'ready2go//women\\54.webp',
+                    'ready2go//women\\55.webp',
+                    'ready2go//women\\56.webp',
+                    'ready2go//women\\57.webp',
+                    'ready2go//women\\58.webp',
+                    'ready2go//women\\59.webp',
+                    'ready2go//women\\60.webp',
+                    'ready2go//women\\61.webp',
+                    'ready2go//women\\65.webp',
+                    'ready2go//women\\66.webp',
+                    'ready2go//women\\67.webp',
+                    'ready2go//women\\68.webp',
+                    'ready2go//women\\69.webp',
+                    'ready2go//women\\70.webp',
+                    'ready2go//women\\71.webp',
+                    'ready2go//women\\72.webp']
 
+bershka_items = [item[:-5] for item in os.listdir('static//fashion_bershka//women')]
+hm_items = [item[:-5] for item in os.listdir('static//fashion_hm//women')]
+mango_items = [item[:-5] for item in os.listdir('static//fashion_mango//women')]
 pullbear_items = [item[:-5] for item in os.listdir('static//fashion_pullbear//women')]
+stradivarius_items = [item[:-5] for item in os.listdir('static//fashion_stradivarius//women')]
+zara_items = [item[:-5] for item in os.listdir('static//fashion_zara//women')]
+riverisland_items = [item[:-5] for item in os.listdir('static//fashion_riverisland//women')]
 
 @app.route('/', defaults={'page': 'index'})
 @app.route('/')
@@ -108,10 +243,13 @@ def home():
         elif 'fashion_stradivarius' in result:
             storeName = 'Stradivarius'
             store_path = 'fashion_stradivarius'
+        elif 'ready2go' in result:
+            storeName = 'Ready2Go'
+            store_path = 'ready2go'
+        
         path = result
         start = os.path.splitext(path)[0].find('\\')
-        file_name = os.path.splitext(
-            path)[0][start+1:] + os.path.splitext(path)[1]
+        file_name = os.path.splitext(path)[0][start+1:] + os.path.splitext(path)[1]
         link = ''
         product_links.append(f'href={link}')
     
@@ -119,13 +257,18 @@ def home():
             stores.append(storeName)
         else:
             stores.append('WM')
-        product_numbers.append(file_name[:-5])
+        product_numbers.append(file_name[:-5])        
         product_img.append(f'{store_path}/women/{file_name}')
+            
         count += 1
     
     return render_template('index.html',len=len(product_img), product_img=product_img, product_number=product_numbers, product_store=stores, product_link=product_links)          
 
 class errorhandler(Exception):
+    @app.errorhandler(400)
+    def page_not_found(e):
+        return render_template('error/400.html'), 400
+    
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('error/404.html'), 404
@@ -134,12 +277,77 @@ class errorhandler(Exception):
     def page_not_found(e):
         return render_template('error/500.html'), 500
 
+class terminal():
+    def log(message):
+        try:
+            console.log(message)
+            seconds = datetime.datetime.now().second
+            if seconds < 10:
+                seconds = '0' + str(seconds)
+                
+            log_file = open('log.txt', 'a')
+            log_file.write(f'[{datetime.datetime.now().hour}:{datetime.datetime.now().minute}:{seconds}] {message}\n')
+            log_file.close()
+        except Exception as e:
+            terminal.error(e)
+        
+    def error(message):
+        error_console.log(message)
+        seconds = datetime.datetime.now().second
+        if seconds < 10:
+            seconds = '0' + str(seconds)
+            
+        log_file = open('log.txt', 'a')
+        log_file.write(f'[{datetime.datetime.now().hour}:{datetime.datetime.now().minute}:{seconds}] [ERROR] {message}\n')
+        log_file.close()
+
 class reset():
     def __init__(self, userID):
         self.userID = userID
       
+    def reset_all():
+        print('Are you sure you want to reset all users and logs? (CONFIRM/n)')
+        reset_input = input(' >> ')
+        if reset_input == 'CONFIRM':
+            uploads_dic = os.listdir('uploads')
+            bin_dic = os.listdir('bin')
+            model_dic = os.listdir('static\\images\\model_img')
+            total_files = len(uploads_dic) + len(bin_dic) + len(model_dic)
+            
+            if total_files > 0:            
+                for f in uploads_dic:
+                    os.remove(os.path.join('uploads', f))
+                    
+                terminal.log('Deleted all uploads')
+                    
+                for f in bin_dic:
+                    os.remove(os.path.join('bin', f))
+                    
+                terminal.log('Deleted all temporary files')
+                
+                for f in model_dic:
+                    os.remove(os.path.join('static\\images\\model_img', f))    
+                    
+                terminal.log('Deleted all model images')
+                
+                os.remove('log.txt')
+                terminal.log('Deleted the log file')
+                    
+                terminal.logf('Reset complete, {total_files} files deleted')
+            else:
+                terminal.log('Reset error: no files found')                
+        else:
+            terminal.log('Reset aborted')
+            
+        terminal.log(f'Do you want to load the program again? (y/n)')
+        
+        if input(' >> ') == 'y':
+            terminal.log('Loading program')
+            return False
+        return True  
+    
     def reset_user(userID):
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- User data ({userID}) has been removed')
+        terminal.log(f'User data ({userID}) has been removed')
         try:
             os.remove(f'uploads\\{userID}.png')
             os.remove(f'static\\images\\model_img\\{userID}_1.webp')
@@ -162,7 +370,7 @@ class reset():
 
     @app.route('/reset<UserID>')
     def reset_files(UserID):
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- User data ({UserID}) has been removed')
+        terminal.log(f'User data ({UserID}) has been removed')
         try:
             os.remove(f'static\\images\\model_img\\{UserID}_1.webp')
             os.remove(f'static\\images\\model_img\\{UserID}_2.webp')
@@ -185,7 +393,7 @@ class reset():
 
     @app.route('/full_reset<UserID>')
     def full_reset(UserID):
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- User data ({UserID}) has been removed')
+        terminal.log(f'User data ({UserID}) has been removed')
         try:
             os.remove(f'uploads\\{UserID}.png')
             os.remove(f'static\\images\\model_img\\{UserID}_1.webp')
@@ -208,7 +416,7 @@ class reset():
         return 'Succes', 200, {'Content-Type': 'text/plain'}
 
     def extension_reset(UserID):
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- User data ({UserID}) has been removed')
+        terminal.log(f'User data ({UserID}) has been removed')
         try:
             os.remove(f'uploads\\{UserID}.png')
             os.remove(f'static\\images\\model_img\\{UserID}_1.webp')
@@ -238,8 +446,38 @@ class extract_img():
         global headers
 
         if gender == 'woman':
-            if store == 'Pull&Bear' and number in pullbear_items:
+            if store == 'H&M' and number in hm_items:
+                img = Image.open(f'static\\fashion_hm\\women\\{number}.webp')
+                imgCopy = img.copy()
+                imgCopy.save(f'uploads\\{userID}.png')      
+                return
+            elif store == 'Bershka' and number in bershka_items:
+                img = Image.open(f'static\\fashion_bershka\\women\\{number}.webp')
+                imgCopy = img.copy()
+                imgCopy.save(f'uploads\\{userID}.png')      
+                return
+            elif store == 'Mango' and number in mango_items:
+                img = Image.open(f'static\\fashion_mango\\women\\{number}.webp')
+                imgCopy = img.copy()
+                imgCopy.save(f'uploads\\{userID}.png')      
+                return
+            elif store == 'Pull&Bear' and number in pullbear_items:
                 img = Image.open(f'static\\fashion_pullbear\\women\\{number}.webp')
+                imgCopy = img.copy()
+                imgCopy.save(f'uploads\\{userID}.png')      
+                return
+            elif store == 'Stradivarius' and number in stradivarius_items:
+                img = Image.open(f'static\\fashion_stradivarius\\women\\{number}.webp')
+                imgCopy = img.copy()
+                imgCopy.save(f'uploads\\{userID}.png')      
+                return
+            elif store == 'Zara' and number in zara_items:
+                img = Image.open(f'static\\fashion_zara\\women\\{number}.webp')
+                imgCopy = img.copy()
+                imgCopy.save(f'uploads\\{userID}.png')      
+                return        
+            elif store == 'River Island' and number in riverisland_items:
+                img = Image.open(f'static\\fashion_riverisland\\women\\{number}.webp')
                 imgCopy = img.copy()
                 imgCopy.save(f'uploads\\{userID}.png')      
                 return
@@ -376,7 +614,7 @@ class extract_img():
                 with open(f'uploads\\{userID}.png', 'wb') as handler:
                     handler.write(img_data)
         elif store == 'Pull&Bear':
-            data = requests.get('https://api.empathybroker.com/search/v1/query/pullbear/searchv2?scope=desktop&lang=en&catalogue=20309415&store=24009502&warehouse=22109425&section=' + gender +'&q=' + number +'&start=0&rows=48&origin=linked&filter={!tag=hierarchical_category_facet}hierarchical_category_20309415_24009502:"' + gender + '"', headers=headers).content
+            data = requests.get('https://api.empathybroker.com/search/v1/query/pullbear/searchv2?scope=desktop&lang=en&catalogue=20309426&store=24009502&warehouse=22109425&section=' + gender +'&q=' + number +'&start=0&rows=48&origin=linked&filter={!tag=hierarchical_category_facet}hierarchical_category_20309426_24009502:"' + gender + '"', headers=headers).content
             
             with open(f'bin\\{userID}.json', 'wb') as handler:
                 handler.write(data)
@@ -475,7 +713,10 @@ class extract_img():
         elif store == 'Bershka':
             base_url = number.find('c0p')
             end_url = number.find('.html')
-            startColor = number.find('colorId=')
+            if 'colorid=' in number:
+                startColor = number.find('colorid=')
+            else:
+                startColor = number.find('colorId=')                
             colorId = number[startColor+8:startColor+11]
             number = number[base_url+3:end_url]
             data = requests.get(f'https://www.bershka.com/itxrest/3/catalog/store/44009503/40259546/productsArray?productIds={number}%2C106465680%2C106185120%2C103578123%2C103646838&languageId=100', headers=headers).content
@@ -498,11 +739,14 @@ class extract_img():
             img_data = requests.get(f'https://static.bershka.net/4/photos2{img_path}.jpg?t={img_ts}', headers=headers).content
             with open(f'uploads\\{userID}.png', 'wb') as handler:
                 handler.write(img_data)
-        elif store == 'Stradivarius':
-            end_url = number.find('.html')
-            startColor = number.find('colorId=')
-            colorId = number[startColor+8:startColor+11]
-            number = number[end_url-9:end_url]
+        elif store == 'Stradivarius':            
+            start = number.find('colorId=') + 8
+            colorId = number[start:start+3]
+            page = requests.get(number, headers=headers).content
+            page = page.decode('utf-8')
+            start = page.find('inditex.iProductId = ') + 21
+            number = page[start:start+9]
+            
             data = requests.get(f'https://www.stradivarius.com/itxrest/2/catalog/store/54009552/50331084/category/0/product/{number}/detail?languageId=100&appId=1', headers=headers).content
             with open(f'bin\\{userID}.json', 'wb') as handler:
                 handler.write(data)
@@ -581,19 +825,51 @@ class extract_img():
                 handler.write(img_data)
         elif store == 'Pull&Bear':
             start = number.find('-l0')+3
-            end = number.find('?cS=')     
-            possible_urls = [f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?",
-                            f"https://static.pullandbear.net/2/photos//2022/V/0/2/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/2/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?",
-                            f"https://static.pullandbear.net/2/photos//2021/V/0/1/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/1/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?",
-                            f"https://static.pullandbear.net/2/photos//2021/V/0/2/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/2/p/{number[start:start+4]}/{number[start+4:end]}/{number[end+4:end+7]}/{number[start:end]}{number[end+4:end+7]}_2_6_8.jpg?"]
-            
-            for url in possible_urls:
-                req = requests.get(url, headers=headers)
-                if req.status_code == 200:
-                    img_data = req.content
-                    with open(f'uploads\\{userID}.png', 'wb') as handler:
-                        handler.write(img_data)
-                    break                          
+            end = number.find('cS=')
+            if end == -1:
+                number_1 = number[start:start+4]
+                number_2 = number[start+4:start+7]
+                number_3 = number[start:start+7]
+                
+                data = requests.get(number, headers=headers).content
+                
+                data = str(data)
+                start = data.find('iProductId = ') + 13
+                end = data[start:].find(';')
+                number2 = data[start:start+end]
+                
+                data = requests.get(f'https://www.pullandbear.com/itxrest/2/catalog/store/24009502/20309426/category/0/product/{number2}/detail?languageId=-1&appId=1', headers=headers).content
+                
+                data = str(data)
+                start = data.find('colors":[{"id":"') + 16
+                colorId = data[start:start+3]
+                
+                possible_urls = [f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?",
+                                f"https://static.pullandbear.net/2/photos//2022/V/0/2/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/2/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?",
+                                f"https://static.pullandbear.net/2/photos//2021/V/0/1/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/1/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?",
+                                f"https://static.pullandbear.net/2/photos//2021/V/0/2/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/2/p/{number_1}/{number_2}/{colorId}/{number_3}{colorId}_2_6_8.jpg?"]
+                
+                for url in possible_urls:
+                    req = requests.get(url, headers=headers)
+                    if req.status_code == 200:
+                        img_data = req.content
+                        with open(f'uploads\\{userID}.png', 'wb') as handler:
+                            handler.write(img_data)
+                        break
+                
+            else:
+                possible_urls = [f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?",
+                                f"https://static.pullandbear.net/2/photos//2022/V/0/2/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/2/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?",
+                                f"https://static.pullandbear.net/2/photos//2021/V/0/1/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/1/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?",
+                                f"https://static.pullandbear.net/2/photos//2021/V/0/2/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/2/p/{number[start:start+4]}/{number[start+4:start+7]}/{number[end+3:end+6]}/{number[start:start+7]}{number[end+3:end+6]}_2_6_8.jpg?"]
+
+                for url in possible_urls:
+                    req = requests.get(url, headers=headers)
+                    if req.status_code == 200:
+                        img_data = req.content
+                        with open(f'uploads\\{userID}.png', 'wb') as handler:
+                            handler.write(img_data)
+                        break                      
         elif store == 'Reserved':
             number = number[-9:]
             img_data = requests.get(f'https://www.reserved.com/media/catalog/product/{number[0]}/{number[1]}/{number.upper()}-010-1_1.jpg', headers=headers).content
@@ -741,6 +1017,22 @@ class extract_img():
 
             with open(f'uploads\\{userID}.png', 'wb') as handler:
                 handler.write(img_data)
+        elif store == 'About You':
+            data = requests.get(number).content
+
+            with open(f"bin\\{userID}.html", 'wb') as f:
+                f.write(data)
+                
+            with open(f"bin\\{userID}.html", 'r', encoding='utf-8') as f:
+                data = f.read()
+                
+            imgStart = data.find('data-testid="productImage"')
+            start = data[imgStart:].find('src="') + imgStart + 5
+            end = data[start:].find('"') + start
+            imgSrc = data[start:end]
+            
+            with open(f'uploads\\{userID}.png', 'wb') as handler:
+                handler.write(requests.get(imgSrc).content)
                                       
 class get_model_image():
     def hm(number, count, userID):
@@ -761,9 +1053,9 @@ class get_model_image():
             pass
 
     def mango(number, count, userID):
-        img_data = requests.get(f"https://st.mngbcn.com/rcs/pics/static/T2/fotos/S20/{number[:-2]}_{number[-2:]}.jpg", headers=headers)
+        img_data = requests.get(f"https://st.mngbcn.com/rcs/pics/static/T3/fotos/S20/{number[:-2]}_{number[-2:]}.jpg", headers=headers)
         if img_data.status_code != 200:
-            img_data = requests.get(f"https://st.mngbcn.com/rcs/pics/static/T2/fotos/S20/{number[:-2]}_{number[-2:]}_D1.jpg", headers=headers)
+            img_data = requests.get(f"https://st.mngbcn.com/rcs/pics/static/T3/fotos/S20/{number[:-2]}_{number[-2:]}_D1.jpg", headers=headers)
         with open(f'static\\images\\model_img\\{userID}_{count}.webp', 'wb') as handler:
             handler.write(img_data.content)
 
@@ -789,19 +1081,23 @@ class get_model_image():
 
     def zara(number, count, userID):
         productId = number
-        data = requests.get(f'https://www.zara.com/be/nl/-p0{productId}.html', headers=headers).content
-        data = str(data)
+        try:
+            data = requests.get(f'https://www.zara.com/be/nl/-p0{productId}.html', headers=headers).content
+            data = str(data)
 
-        img_find = data.find('_1_1.jpg')
-        end = data[img_find:].find('"')
-        reverse = data[:end+img_find][::-1]
-        start = reverse.find('"')
-        img_url = reverse[:start][::-1]
+            img_find = data.find('_1_1.jpg')
+            end = data[img_find:].find('"')
+            reverse = data[:end+img_find][::-1]
+            start = reverse.find('"')
+            img_url = reverse[:start][::-1]
 
-        img_data = requests.get(img_url, headers=headers).content
+            img_data = requests.get(img_url, headers=headers).content
 
-        with open(f'static\\images\\model_img\\{userID}_{count}.webp', 'wb') as handler:
-            handler.write(img_data)
+            with open(f'static\\images\\model_img\\{userID}_{count}.webp', 'wb') as handler:
+                handler.write(img_data)
+        except Exception as e:
+            print(e)
+            pass
 
     def pullbear(number, count, userID):
         possible_urls = [f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_1_1.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_1_1.jpg?",
@@ -844,26 +1140,29 @@ class get_model_image():
             handler.write(img_data)
 
     def weekday(number, count, userID):
-        product_data = requests.get(f"https://photorankapi-a.akamaihd.net/customers/219461/streams/bytag/{number}?auth_token=36250991614184b2b35282b4efc7de904d5f0fbf01936e8a65006fc56dd969c4&wrap_responses=1&version=v2.2", headers=headers).content
-        with open(f"bin\\{userID}.json", 'wb') as fp:
-            fp.write(product_data)
-
-        with open(f"bin\\{userID}.json") as fp:
-            product_data = json.load(fp)
-            
-        product_url = product_data['data']['product_url']
-        product_data = requests.get(product_url, headers=headers).content
-        
+        product_data = requests.get(f"https://www.weekday.com/en_eur/search.html?q={number}", headers=headers).content
         with open(f"bin\\{userID}.html", 'wb') as fp:
             fp.write(product_data)
 
         with open(f"bin\\{userID}.html") as fp:
             soup = BeautifulSoup(fp, 'html.parser')
-            product_img_url = soup.find_all('img', {'class': 'default-image'})[0]['data-large-src']
+            product_url = soup.find_all('a', {'class': 'search-link-track'})[0]['href']
+        
+        try:
+            product_data = requests.get(product_url, headers=headers).content
             
-        img_data = requests.get('https://lp.weekday.com/app003prod?set=key[resolve.pixelRatio],value[1]&set=key[resolve.width],value[450]&set=key[resolve.height],value[10000]&set=key[resolve.imageFit],value[containerwidth]&set=key[resolve.allowImageUpscaling],value[0]&set=key[resolve.format],value[webp]&set=key[resolve.quality],value[90]&:' + product_img_url, headers=headers).content
-        with open(f'static\\images\\model_img\\{userID}_{count}.webp', 'wb') as handler:
-            handler.write(img_data)
+            with open(f"bin\\{userID}.html", 'wb') as fp:
+                fp.write(product_data)
+
+            with open(f"bin\\{userID}.html") as fp:
+                soup = BeautifulSoup(fp, 'html.parser')
+                product_img_url = soup.find_all('img', {'class': 'default-image'})[0]['data-large-src']
+                
+            img_data = requests.get('https://lp.weekday.com/app003prod?set=key[resolve.pixelRatio],value[1]&set=key[resolve.width],value[450]&set=key[resolve.height],value[10000]&set=key[resolve.imageFit],value[containerwidth]&set=key[resolve.allowImageUpscaling],value[0]&set=key[resolve.format],value[webp]&set=key[resolve.quality],value[90]&:' + product_img_url, headers=headers).content
+            with open(f'static\\images\\model_img\\{userID}_{count}.webp', 'wb') as handler:
+                handler.write(img_data)
+        except:
+            pass
 
     def zalando(number, count, userID):        
         img_data = requests.get(f'https://www.zalando.be/dames/?q={number}', headers=headers).content
@@ -887,169 +1186,26 @@ class get_model_image():
         with open(f'static\\images\\model_img\\{userID}_{count}.webp', 'wb') as handler:
             handler.write(img_data)        
 
-class get_product_image():
-    def bershka(number):
-        possible_urls = [f"https://static.bershka.net/4/photos2/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
-                 f"https://static.bershka.net/4/photos2/2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
-                 f"https://static.bershka.net/4/photos2/2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
-                 f"https://static.bershka.net/4/photos2/2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_4_1.jpg?",
-                 f"https://static.bershka.net/4/photos2/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
-                 f"https://static.bershka.net/4/photos2/2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
-                 f"https://static.bershka.net/4/photos2/2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
-                 f"https://static.bershka.net/4/photos2/2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.bershka.net/4/photos2/2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?"]
-
-        for url in possible_urls:
-            try:
-                response = requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    return url
-            except:
-                pass
-    
-    def hm(number):
-        page = requests.get(f"https://www2.hm.com/nl_be/productpage.{number}.html", headers=headers).content
-
-        with open(f"bin\\hm.html", 'wb') as fp:
-            fp.write(page)
-
-        with open(f"bin\\hm.html") as fp:
-            soup = BeautifulSoup(fp, 'html.parser')
-            
-        slider = soup.find('div', {'class': 'mini-slider'})
-        items = slider.find_all('li', {'class': 'list-item'})
-
-        for item in items:
-            if not 'hidden' in item['class']:
-                url = item.find('noscript')['data-src']
-                if '/miniature]' in url:
-                    url = url.replace('/miniature]', '/main]')
-                    return url
-                
-    def mango(number):
-        return f"https://st.mngbcn.com/rcs/pics/static/T2/fotos/S20/{number[:-2]}_{number[-2:]}_B.jpg"
-    
-    def mostwanted(number):
-        page = requests.get(f"https://www.mostwantednl.nl/catalogsearch/result/?q={number}", headers=headers).content
-
-        with open(f"bin\\mostwanted.html", 'wb') as fp:
-            fp.write(page)
-            
-        with open(f"bin\\mostwanted.html") as fp:
-            soup = BeautifulSoup(fp, 'html.parser')
-            
-        url = soup.find('img', {'class': 'product-image-photo'})['src']
-
-        return url
-    
-    def pullbear(number):
-        possible_urls = [f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
-                 f"https://static.pullandbear.net/2/photos//2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
-                 f"https://static.pullandbear.net/2/photos//2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
-                 f"https://static.pullandbear.net/2/photos//2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_2_6_8.jpg?",
-                 f"https://static.pullandbear.net/2/photos//2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
-                 f"https://static.pullandbear.net/2/photos//2022/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2022/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
-                 f"https://static.pullandbear.net/2/photos//2021/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?",
-                 f"https://static.pullandbear.net/2/photos//2021/V/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?", f"https://static.pullandbear.net/2/photos//2021/I/0/2/p/{number[:4]}/{number[4:7]}/{number[7:]}/{number}_1_1_8.jpg?"]
-        
-        for url in possible_urls:
-            try:
-                response = requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    return url
-            except:
-                pass
-            
-    def riverisland(number):
-        return f"https://images.riverisland.com/is/image/RiverIsland/_{number}_alt2?$ProductImagePortraitLarge$"
-    
-    def stradivarius(number):
-        possible_urls = [f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_2_4_1.jpg',
-                 f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_2_4_1.jpg',
-                 f'https://static.e-stradivarius.net/5/photos3/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_2_4_1.jpg',
-                 f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_1_1_8.jpg',
-                 f'https://static.e-stradivarius.net/5/photos3/2022/I/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_1_1_8.jpg',
-                 f'https://static.e-stradivarius.net/5/photos3/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_1_1_8.jpg']
-
-        for url in possible_urls:
-            try:
-                response = requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    return url
-            except:
-                pass
-            
-    def we(number):
-        return f"https://www.wefashion.be/dw/image/v2/AANH_PRD/on/demandware.static/-/Sites-master-catalog/default/images/hi-res/{number}_1.jpg"
-    
-    def weekday(number):
-        product_data = requests.get(f"https://photorankapi-a.akamaihd.net/customers/219461/streams/bytag/{number}?auth_token=36250991614184b2b35282b4efc7de904d5f0fbf01936e8a65006fc56dd969c4&wrap_responses=1&version=v2.2", headers=headers).content
-        with open(f"bin\\weekday.json", 'wb') as fp:
-            fp.write(product_data)
-        with open(f"bin\\weekday.json") as fp:
-            product_data = json.load(fp)
-            
-        product_url = product_data['data']['product_url']
-        product_data = requests.get(product_url, headers=headers).content
-
-        with open(f"bin\\weekday.html", 'wb') as fp:
-            fp.write(product_data)
-        with open(f"bin\\weekday.html") as fp:
-            soup = BeautifulSoup(fp, 'html.parser')
-            items = soup.find_all('div', {'class': 'placeholder-wrapper'})
-            
-        for item in items:
-            img = item.find('img')
-            if '[DESCRIPTIVESTILLLIFE]' in img['data-large-src']:
-                url = img['data-large-src']
-                return url
-            
-    def zalando(number):
-        img_data = requests.get(f'https://www.zalando.be/dames/?q={number}', headers=headers).content
-
-        with open(f"bin\\zalando.html", 'wb') as handler:
-            handler.write(img_data)
-            
-        with open(f"bin\\zalando.html", 'r', encoding='utf-8') as fp:
-            data = fp.read()
-            
-        end = data.find('&filter=packshot')
-        data = data[:end]
-        data_res = data[::-1]
-        start = data_res.find('"')
-        product_img_url = data[-start:]
-        url = product_img_url[:product_img_url.find('?imwidth=')]
-        
-        return url
-    
-    def zara(number):
-        data = requests.get(f'https://www.zara.com/be/nl/-p0{number}.html', headers=headers).content
-        
-        data = str(data)
-        img_find = data.find('6_1_1.jpg')
-        end = data[img_find:].find('"')
-        reverse = data[:end+img_find][::-1]
-        start = reverse.find('"')
-        url = reverse[:start][::-1]
-        
-        return url
-
 class switch_page():
     @app.route('/predict/1', methods=['POST', 'GET'])
     def prev_page():
         start_time = datetime.datetime.now()
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- User changed page to page number 1')
+        terminal.log(f'User changed page to page number 1')
         userID = request.form['id']
         gender = request.form['gender'].upper()
         
+        share_store = request.form['share-store']
+        share_content = request.form['share-content']
+        share_method = request.form['share-method']
+        
         try:
             results = model.process(gender, userID, 1)
-            print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- 10 results found with input type: IMAGE and with gender: {gender.upper()}')
+            terminal.log(f'10 results found with input type: IMAGE and with gender: {gender.upper()}')
             dev_mode(f'Results: {results}')
             uploaded_img_path = userID + '.png'
-            model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(
-                results, gender, userID)
-            print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
-            return render_template(f'pages/predict_page_1.html', recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])          
+            model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, gender, userID)
+            terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+            return render_template(f'pages/predict_page_1.html', share_method=share_method, share_store=share_store, share_content=share_content, recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])          
         except Exception as e:
             flash('Something went wrong, please try again!')
             return redirect('/')
@@ -1057,19 +1213,22 @@ class switch_page():
     @app.route('/predict/2', methods=['POST', 'GET'])
     def next_page():
         start_time = datetime.datetime.now()
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- User changed page to page number 2')
+        terminal.log(f'User changed page to page number 2')
         userID = request.form['id']
         gender = request.form['gender'].upper()
         
+        share_store = request.form['share-store']
+        share_content = request.form['share-content']
+        share_method = request.form['share-method']
+        
         try:
             results = model.process(gender, userID, 2)
-            print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- 10 results found with input type: IMAGE and with gender: {gender.upper()}')
+            terminal.log(f'10 results found with input type: IMAGE and with gender: {gender.upper()}')
             dev_mode(f'Results: {results}')
             uploaded_img_path = userID + '.png'
-            model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(
-                results, gender, userID)
-            print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
-            return render_template(f'pages/predict_page_2.html', recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])          
+            model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, gender, userID)
+            terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+            return render_template(f'pages/predict_page_2.html', share_method=share_method, share_store=share_store, share_content=share_content, recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])          
         except Exception as e:
             flash('Something went wrong, please try again!')
             return redirect('/')
@@ -1077,39 +1236,41 @@ class switch_page():
 class extension():
     @app.route('/extension', methods=['POST', 'GET'])
     def open_extension():
-        if request.method == 'GET':
+        if request.method == 'POST':
             start_time = datetime.datetime.now()
-            userID = request.args['id']
-            gender = request.args['gender'].upper()
+            userID = request.form['id']
+            gender = 'WOMEN'
             
             try:
                 results = model.process(gender, userID, 1)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- 10 results found with input type: EXTENSION and with gender: {gender.upper()}')
+                terminal.log(f'10 results found with input type: EXTENSION and with gender: {gender.upper()}')
                 dev_mode(f'Results: {results}')
                 uploaded_img_path = userID + '.png'
                 model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, gender, userID)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+                terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
                 return render_template(f'pages/predict_page_1.html', recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])          
             except Exception as e:
                 flash('Something went wrong, please try again!')
                 return redirect('/')
-        else:
-            link = request.form['link']
-            userID = request.form['id']
-            store = request.form['store']
+            
+    @app.route('/extensioninput', methods=['POST', 'GET'])
+    def input_extension():
+        link = request.form['link']
+        userID = request.form['id']
+        store = request.form['store']
+        try:
+            extract_img.extract_img_from_link(link, store, userID)                
             try:
-                extract_img.extract_img_from_link(link, store, userID)                
-                try:
-                    os.remove(f'bin\\{userID}.json')
-                except:
-                    pass
-                try:
-                    os.remove(f'bin\\{userID}.html')
-                except:
-                    pass
+                os.remove(f'bin\\{userID}.json')
             except:
-                return 'Error'
-            return 'Done'
+                pass
+            try:
+                os.remove(f'bin\\{userID}.html')
+            except:
+                pass
+        except:
+            return 'Error'
+        return 'Done'
 
 class recommend():
     @app.route('/recommend', methods=['GET'])
@@ -1120,7 +1281,7 @@ class recommend():
         store = data[1]
         imgs = []
         links = []
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Get the look with {number} from {store}')
+        terminal.log(f'Get the look with {number} from {store}')
         
         if store == 'Stradivarius':
             data = requests.get(f'https://api.empathybroker.com/search/v1/query/stradivarius/skusearch?q={number}&lang=nl&start=0&store=54009552&catalogue=50331084&warehouse=52110059&session=e5705e12-5521-5d65-5912-ff9e86d99a4f&user=4e3f7b10-53a4-b1c4-52ab-4c6855368d6a&scope=desktop&rows=5', headers=headers).content
@@ -1203,6 +1364,23 @@ class recommend():
             os.remove(f'bin\\{userID}.json')
         except:
             pass
+        
+        if len(imgs) == 0:
+            response = {'result': 'No results found'}
+            response = json.dumps(response, indent = 4) 
+            return response
+        elif len(imgs) == 1:
+            response = {'result': {'img':[imgs[0]], 'link':[links[0]]}}
+            response = json.dumps(response, indent = 4) 
+            return response
+        elif len(imgs) == 2:
+            response = {'result': {'img':[imgs[0], imgs[1]], 'link':[links[0], links[1]]}}
+            response = json.dumps(response, indent = 4) 
+            return response
+        elif len(imgs) == 3:
+            response = {'result': {'img':[imgs[0], imgs[1], imgs[2]], 'link':[links[0], links[1], links[2]]}}
+            response = json.dumps(response, indent = 4) 
+            return response
         
         response = {'result': {'img':[imgs[0], imgs[1], imgs[2], imgs[3]], 'link':[links[0], links[1], links[2], links[3]]}}
         response = json.dumps(response, indent = 4) 
@@ -1296,9 +1474,23 @@ class recommend():
                     return False
                 return True
 
+class pick():
+    @app.route('/pick', methods=['GET'])
+    def get_picked_img():
+        try:
+            userID = request.args['id']
+            path = request.args['path'].replace('/', '\\')
+            
+            img = Image.open(f'static\\{path}')
+            imgCopy = img.copy()
+            imgCopy.save(f'uploads\\{userID}.png')
+            return 'ok'
+        except:
+            return 'error'
+
 def dev_mode(mess):
     if dev_status:
-        print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- {mess}')        
+        terminal.log(f'{mess}')        
 
 def get_ramdom_img():
     picked_items =  random.sample(range(len(forselectedItems)), 20)
@@ -1339,6 +1531,9 @@ def get_ramdom_img():
         elif 'fashion_stradivarius' in result:
             storeName = 'Stradivarius'
             store_path = 'fashion_stradivarius'
+        elif 'ready2go' in result:
+            storeName = 'Ready2Go'
+            store_path = 'ready2go'
         path = result
         start = os.path.splitext(path)[0].find('\\')
         file_name = os.path.splitext(
@@ -1356,7 +1551,7 @@ def get_ramdom_img():
 
     return product_links, product_numbers, stores, product_img
 
-def get_link(number, storeName, userID):
+def get_link(number, storeName, userID, zara_model_img_status):
     if storeName == 'H&M':
         return f'https://www.hm.com/productpage.{number}.html'
     elif storeName == 'Pull&Bear':
@@ -1385,7 +1580,10 @@ def get_link(number, storeName, userID):
         canonicalUrl = 'canonicalUrl'
         return f'https://shop.mango.com{product_data[canonicalUrl]}?c={number[-2:]}'
     elif storeName == 'Zara':
-        return f'https://www.zara.com/be/nl/-p0{number}.html'
+        if zara_model_img_status:
+            return f'https://www.zara.com/be/nl/-p0{number}.html'
+        else:
+            return f'https://www.zara.com/be/nl/search?searchTerm={number}'
     elif storeName == 'Most Wanted':
         return f'https://www.mostwantednl.nl/catalogsearch/result/?q={number}'
     elif storeName == 'WE':
@@ -1415,7 +1613,10 @@ def get_link(number, storeName, userID):
         with open(f"bin\\{userID}.json") as fp:
             product_data = json.load(fp)
             
-        return product_data['data']['product_url']
+        try: 
+            return product_data['data']['product_url']
+        except:
+            return f'https://www.weekday.com/en_eur/search.html?q={number}'
     elif storeName == 'River Island':
         return f'https://www.riverisland.com/p/-{number}'
     else:
@@ -1444,30 +1645,6 @@ def get_model_store(storeName, number, count, userID):
         get_model_image.zalando(number, count, userID)
     elif storeName == 'River Island':
         get_model_image.riverisland(number, count, userID)
-
-def get_product_store(storeName, number, userID):
-    if storeName == 'H&M':
-        return get_product_image.hm(number, userID)
-    elif storeName == 'Mango':
-        return get_product_image.mango(number, userID)
-    elif storeName == 'Zara':
-        return get_product_image.zara(number, userID)
-    elif storeName == 'Pull&Bear':
-        return get_product_image.pullbear(number, userID)
-    elif storeName == 'Stradivarius':
-        return get_product_image.stradivarius(number, userID)
-    elif storeName == 'Bershka':
-        return get_product_image.bershka(number, userID)
-    elif storeName == 'WE':
-        return get_product_image.we(number, userID)
-    elif storeName == 'Weekday':
-        return get_product_image.weekday(number, userID)
-    elif storeName == 'Most Wanted':
-        return get_product_image.mostwanted(number, userID)
-    elif storeName == 'Zalando':
-        return get_product_image.zalando(number, userID)
-    elif storeName == 'River Island':
-        return get_product_image.riverisland(number, userID)
 
 def process_output(results, gender, userID):
     model_img = []
@@ -1516,16 +1693,19 @@ def process_output(results, gender, userID):
             storeName = 'River Island'
             store_path = 'fashion_riverisland'
         
+        zara_model_img_status = True
         path = result
         start = os.path.splitext(path)[0].find('\\')
         file_name = os.path.splitext(path)[0][start+1:] + os.path.splitext(path)[1]
         if storeName != 'Most Wanted' and storeName != 'New Yorker' and storeName != 'Stradivarius':
-            get_model_store(storeName, file_name[:-5], count, userID)
             try:
+                get_model_store(storeName, file_name[:-5], count, userID)
                 img = Image.open('static\\images\\model_img\\' + userID + '_' + str(count) + '.webp')
                 model_img.append(f'images/model_img/{userID}_{count}.webp')
             except:
-                model_img.append(f'{store_path}\\{gender.lower()}\\{file_name}')
+                if storeName == 'Zara':
+                    zara_model_img_status = False
+                model_img.append(f'{store_path}/{gender.lower()}/{file_name}')
         else:
             if storeName == 'Stradivarius':
                     
@@ -1537,14 +1717,14 @@ def process_output(results, gender, userID):
                 else:
                     model_img.append(f'https://static.e-stradivarius.net/5/photos3/2022/V/0/1/p/{number[:4]}/{number[4:7]}/{number[7:10]}/{number}_1_1_2.jpg')
             else:
-                model_img.append(f'{store_path}\\{gender.lower()}\\{file_name}')
+                model_img.append(f'{store_path}/{gender.lower()}/{file_name}')
         
         if storeName == 'Stradivarius' or storeName == 'Mango' or storeName == 'River Island' or storeName == 'Bershka':
             recommended_avaible.append(recommend.recommend_check(userID, file_name[:-5], storeName))
         else:
             recommended_avaible.append(False)
         
-        link = get_link(file_name[:-5], storeName, userID)
+        link = get_link(file_name[:-5], storeName, userID, zara_model_img_status)
         product_links.append(f'href={link}')
     
         if storeName != 'Most Wanted':
@@ -1553,7 +1733,7 @@ def process_output(results, gender, userID):
             stores.append('WM')
 
         product_numbers.append(file_name[:-5])
-        product_img.append(get_product_store(storeName, file_name[:-5]))
+        product_img.append(f'{store_path}/{gender.lower()}/{file_name}')
         
         count += 1
     
@@ -1574,7 +1754,7 @@ def predict():
     if request.method == 'POST':
         if request.form['UserID'] == '':
             flash('Please agree to the terms and conditions.')
-            click.secho(f'[ERROR] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- The user did\'t agree to the terms', fg='red')
+            terminal.error(f'The user did\'t agree to the terms')
             product_links, product_numbers, stores, product_img = get_ramdom_img()    
             return redirect('/')
         if 'file' not in request.files:
@@ -1598,36 +1778,45 @@ def predict():
                     store_path = 'fashion_zara'
                 elif 'Stradivarius' in store:
                     store_path = 'fashion_stradivarius'
+                elif 'Ready2Go' in store:
+                    store_path = 'ready2go'
+                    
+                share_method = 'ready2go'
+                share_store = store
+                share_content = number
+                
                 img = Image.open(f'static\\{store_path}\\women\\{number}.webp')
                 imgCopy = img.copy()
                 imgCopy.save(f'uploads\\{userID}.png')      
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm started with given input')
+                terminal.log(f'Programm started with given input')
                 results = model.process('WOMEN', userID, 1)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- 10 results found with input type: Ready2Go images')
+                terminal.log(f'10 results found with input type: Ready2Go images')
                 dev_mode(f'Results: {results}')
                 uploaded_img_path = userID + '.png'
-                model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(
-                    results, 'WOMEN', userID)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
-                return render_template('pages/predict_page_1.html', recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender='Women', uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])
+                model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, 'WOMEN', userID)
+                terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+                return render_template('pages/predict_page_1.html', share_method=share_method, share_store=share_store, share_content=share_content, recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender='Women', uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])
             except:
                 gender = 'Women'
                 inputType = 'Ready2Go images'
                 pass
             try:
                 a = request.form['link']
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Extracting image with link ({a}) and store ({request.form["store"]})')
+                terminal.log(f'Extracting image with link ({a}) and store ({request.form["store"]})')
                 inputType = 'LINK'
+                share_content = request.form['link']
+                share_store = request.form['store']
+                share_method = 'link'
                 try:
                     extract_img.extract_img_from_link(request.form['link'], request.form['store'], userID)
                 except Exception as e:         
                     product_links, product_numbers, stores, product_img = get_ramdom_img()
                     flash('Product not found. Try with another link or store.')
-                    click.secho(f'[ERROR] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- An error accured when extracting image with as input type {inputType}: {e}', fg='red')
+                    terminal.error(f'An error accured when extracting image with as input type {inputType}: {e}')
                     reset.reset_user(userID)
                     return redirect('/')    
             except:
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Extracting image with number ({request.form["number"]}) and store ({request.form["store"]})')
+                terminal.log(f'Extracting image with number ({request.form["number"]}) and store ({request.form["store"]})')
                 inputType = 'NUMBER'
                 try:
                     try:
@@ -1636,10 +1825,13 @@ def predict():
                     except:
                         gender = 'woman'
                     extract_img.extract_img_from_number(request.form['number'], request.form['store'] , userID, gender)
+                    share_content = request.form['number']
+                    share_store = request.form['store']
+                    share_method = 'number'
                 except Exception as e:
                     product_links, product_numbers, stores, product_img = get_ramdom_img()    
                     flash('Product not found. Try with another number or store.')
-                    click.secho(f'[ERROR] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- An error accured when extracting image with as input type {inputType}: {e}', fg='red')
+                    terminal.error(f'An error accured when extracting image with as input type {inputType}: {e}')
                     reset.reset_user(userID)
                     return redirect('/') 
             try:
@@ -1648,24 +1840,23 @@ def predict():
                     gender = 'MEN'
                 except:
                     gender = 'WOMEN'
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm started with given input')
+                terminal.log(f'Programm started with given input')
                 results = model.process(gender, userID, 1)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- 10 results found with input type: {inputType} and with gender: {gender.upper()}')
+                terminal.log(f'10 results found with input type: {inputType} and with gender: {gender.upper()}')
                 dev_mode(f'Results: {results}')
                 files = os.listdir('uploads')
                 uploaded_img_path = userID + '.png'
-                model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(
-                    results, gender, userID)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
-                return render_template('pages/predict_page_1.html', recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])
+                model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, gender, userID)
+                terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+                return render_template('pages/predict_page_1.html', share_method=share_method, share_store=share_store, share_content=share_content, recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])
             except Exception as e:    
                 product_links, product_numbers, stores, product_img = get_ramdom_img()    
                 flash('Product not found. Try with another input type.')
-                click.secho(f'[ERROR] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- An error accured when using input type {inputType}: {e}', fg='red')
+                terminal.error(f'An error accured when using input type {inputType}: {e}')
                 reset.reset_user(userID)
                 return redirect('/')  
         else:
-            print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Extracting uploaded image')
+            terminal.log(f'Extracting uploaded image')
             try:
                 userID = request.form['UserID']
                 file = request.files['file']
@@ -1675,36 +1866,141 @@ def predict():
                     gender = 'MEN'
                 except:
                     gender = 'WOMEN'
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm started with given input')
+                terminal.log(f'Programm started with given input')
                 results = model.process(gender,userID, 1)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- 10 results found with input type: IMAGE and with gender: {gender.upper()}')
+                terminal.log(f'10 results found with input type: IMAGE and with gender: {gender.upper()}')
                 dev_mode(f'Results: {results}')
                 uploaded_img_path = userID + '.png'
-                model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(
-                    results, gender, userID)
-                print(f'[INFO] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
-                return render_template('pages/predict_page_1.html', recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])          
+                model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, gender, userID)
+                terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+                return render_template('pages/predict_page_1.html', share_method='', share_store='', share_content='', recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])          
             except Exception as e:
                 flash('An error occurred: one result could not be found')
-                click.secho(f'[ERROR] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- An error accured: {e}', fg='red')
+                terminal.error(f'An error accured: {e}')
                 product_links, product_numbers, stores, product_img = get_ramdom_img()    
                 reset.reset_user(userID)
                 return redirect('/') 
     else:      
-        flash('Choose an input type or upload an image to start the programm with it or try again.')
-        click.secho(f'[ERROR] [{datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] -- The user did\'t upload an image', fg='red')
-        product_links, product_numbers, stores, product_img = get_ramdom_img()    
-        return redirect('/')   
+        userID = request.args['UserID']
+        try:
+            a = request.args['forselected-input'].split(' ')
+            store = a[0]
+            number = a[1]
+            if 'H&M' in store:
+                store_path = 'fashion_hm'
+            elif 'Pull&Bear' in store:
+                store_path = 'fashion_pullbear'
+            elif 'Bershka' in store:
+                store_path = 'fashion_bershka'
+            elif 'Mango' in store:
+                store_path = 'fashion_mango'
+            elif 'Zalando' in store:
+                store_path = 'fashion_zalando'
+            elif 'Zara' in store:
+                storeName = 'Zara'
+                store_path = 'fashion_zara'
+            elif 'Stradivarius' in store:
+                store_path = 'fashion_stradivarius'
+            elif 'Ready2Go' in store:
+                store_path = 'ready2go'
+                
+            share_method = 'ready2go'
+            share_store = store
+            share_content = number
+                
+            img = Image.open(f'static\\{store_path}\\women\\{number}.webp')
+            imgCopy = img.copy()
+            imgCopy.save(f'uploads\\{userID}.png')      
+            terminal.log(f'Programm started with given input')
+            results = model.process('WOMEN', userID, 1)
+            terminal.log(f'10 results found with input type: Ready2Go images')
+            dev_mode(f'Results: {results}')
+            uploaded_img_path = userID + '.png'
+            model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, 'WOMEN', userID)
+            terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+            return render_template('pages/predict_page_1.html', share_method=share_method, share_store=share_store, share_content=share_content, recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender='Women', uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])
+        except:
+            gender = 'Women'
+            inputType = 'Ready2Go images'
+            pass
+        try:
+            a = request.args['link']
+            terminal.log(f'Extracting image with link ({a}) and store ({request.args["store"]})')
+            inputType = 'LINK'
+            share_content = request.args['link']
+            share_store = request.args['store']
+            share_method = 'link'
+            try:
+                extract_img.extract_img_from_link(request.args['link'], request.args['store'], userID)
+            except Exception as e:         
+                product_links, product_numbers, stores, product_img = get_ramdom_img()
+                flash('Product not found. Try with another link or store.')
+                terminal.error(f'An error accured when extracting image with as input type {inputType}: {e}')
+                reset.reset_user(userID)
+                return redirect('/')    
+        except:
+            terminal.log(f'Extracting image with number ({request.args["number"]}) and store ({request.args["store"]})')
+            inputType = 'NUMBER'
+            try:
+                try:
+                    a = request.args['gender-switch']
+                    gender = 'man'
+                except:
+                    gender = 'woman'
+                extract_img.extract_img_from_number(request.args['number'], request.args['store'] , userID, gender)
+                share_content = request.args['number']
+                share_store = request.args['store']
+                share_method = 'number'
+            except Exception as e:
+                product_links, product_numbers, stores, product_img = get_ramdom_img()    
+                flash('Product not found. Try with another number or store.')
+                terminal.error(f'An error accured when extracting image with as input type {inputType}: {e}')
+                reset.reset_user(userID)
+                return redirect('/') 
+        try:
+            try:
+                a = request.args['gender-switch']
+                gender = 'MEN'
+            except:
+                gender = 'WOMEN'
+            terminal.log(f'Programm started with given input')
+            results = model.process(gender, userID, 1)
+            terminal.log(f'10 results found with input type: Share and with gender: {gender.upper()}')
+            dev_mode(f'Results: {results}')
+            files = os.listdir('uploads')
+            uploaded_img_path = userID + '.png'
+            model_img, product_img, product_links, stores, product_numbers, recommended_avaible = process_output(results, gender, userID)
+            terminal.log(f'Programm ended succesfully in {(datetime.datetime.now() - start_time).total_seconds()} seconds')
+            return render_template('pages/predict_page_1.html', share_method=share_method, share_store=share_store, share_content=share_content, recommend_avaible_1=recommended_avaible[0], recommend_avaible_2=recommended_avaible[1], recommend_avaible_3=recommended_avaible[2], recommend_avaible_4=recommended_avaible[3], recommend_avaible_5=recommended_avaible[4], recommend_avaible_6=recommended_avaible[5], recommend_avaible_7=recommended_avaible[6], recommend_avaible_8=recommended_avaible[7], recommend_avaible_9=recommended_avaible[8], recommend_avaible_10=recommended_avaible[9], UserID=userID, gender=gender.capitalize(), uploaded_img=uploaded_img_path, display_status='style=display:none', product_link_1=product_links[0], product_number_1=product_numbers[0], product_store_1=stores[0], product_model_img_1=model_img[0], product_img_1=product_img[0], product_link_2=product_links[1], product_number_2=product_numbers[1], product_store_2=stores[1], product_model_img_2=model_img[1], product_img_2=product_img[1], product_link_3=product_links[2], product_number_3=product_numbers[2], product_store_3=stores[2], product_model_img_3=model_img[2], product_img_3=product_img[2], product_link_4=product_links[3], product_number_4=product_numbers[3], product_store_4=stores[3], product_model_img_4=model_img[3], product_img_4=product_img[3], product_link_5=product_links[4], product_number_5=product_numbers[4], product_store_5=stores[4], product_model_img_5=model_img[4], product_img_5=product_img[4], product_link_6=product_links[5], product_number_6=product_numbers[5], product_store_6=stores[5], product_model_img_6=model_img[5], product_img_6=product_img[5], product_link_7=product_links[6], product_number_7=product_numbers[6], product_store_7=stores[6], product_model_img_7=model_img[6], product_img_7=product_img[6], product_link_8=product_links[7], product_number_8=product_numbers[7], product_store_8=stores[7], product_model_img_8=model_img[7], product_img_8=product_img[7], product_link_9=product_links[8], product_number_9=product_numbers[8], product_store_9=stores[8], product_model_img_9=model_img[8], product_img_9=product_img[8], product_link_10=product_links[9], product_number_10=product_numbers[9], product_store_10=stores[9], product_model_img_10=model_img[9], product_img_10=product_img[9])
+        except Exception as e:    
+            product_links, product_numbers, stores, product_img = get_ramdom_img()    
+            flash('Product not found. Try with another input type.')
+            terminal.error(f'An error accured when using input type {inputType}: {e}')
+            reset.reset_user(userID)
+            return redirect('/')  
                              
 @app.route('/uploads/<filename>')
 def upload(filename):
     return send_from_directory('uploads', filename)
 
-dev_status = False
-app.secret_key = 'FR6545'
-app.config['SESSION_TYPE'] = 'Fashion recommender'
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
-app.run()
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument('-dev', '--dev-mode', action='store_true', help='Enable dev mode')
+    parser.add_argument('-reset', '--reset', action='store_true', help='Reset all users')
+    args = parser.parse_args()
+    dev_status = args.dev_mode
+    reset_status = args.reset
+    if reset_status:
+        reset_output = reset.reset_all()
+        if reset_output:
+            quit()  
+    app.secret_key = 'FR6545'
+    app.config['SESSION_TYPE'] = 'Fashion recommender'
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+    log_file = open('log.txt', 'a')
+    log_file.write(f'-------------------------------------------------- {datetime.datetime.now().date()} Report ---------------------------------------------------\n')
+    log_file.close()
+    app.run(host="0.0.0.0", threaded=True, port=5000)

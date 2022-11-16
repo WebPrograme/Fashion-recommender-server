@@ -9390,7 +9390,7 @@ body {
   line-height: 1.5;
   color: #ffffff;
   text-align: left;
-  background-color: #ececec;
+  background-color: #f2f3f5;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -22471,7 +22471,7 @@ html {
   overflow-x: hidden;
   overflow-y: overlay;
   padding-right: 0 !important;
-  background-color: #ececec;
+  background-color: #f2f3f5;
 }
 
 html:focus-within {
@@ -30838,7 +30838,7 @@ div.tagsinput span.tag a {
 }
 
 .content-wrapper {
-  background: #ececec;
+  background: #f2f3f5;
   padding: 1.875rem 1.75rem;
   width: 100%;
   -webkit-flex-grow: 1;
