@@ -21,8 +21,8 @@ model = Sequential([model, GlobalMaxPooling2D()]) # Faster but less accurate
 pick_store = False
 product_status = False
 
-img_files_list = pickle.load(open(f"img_data\\img_filesWOMEN3.pkl", "rb"))
-features_list = pickle.load(open(f"img_data\\image_features_embeddingWOMEN3.pkl", "rb"))
+img_files_list = pickle.load(open(f"app\\img_data\\img_filesWOMEN3.pkl", "rb"))
+features_list = pickle.load(open(f"app\\img_data\\image_features_embeddingWOMEN3.pkl", "rb"))
 
 def process(gender, userID, pageNumber):
     global pick_store, product_status
