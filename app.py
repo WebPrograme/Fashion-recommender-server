@@ -20,8 +20,6 @@ all_files = []
 for path, subdirs, files in os.walk(os.path.dirname(os.path.abspath(__file__))):
     for name in files:
         all_files.append(os.path.join(path, name)[len(os.path.dirname(os.path.abspath(__file__))):])
-        
-print(all_files)
 
 app = Flask('Fashion recommender', template_folder='template')
 app.wsgi_app = ProxyFix(
@@ -32,7 +30,7 @@ dev_status = False
 console = Console()
 error_console = Console(stderr=True, style="bold red")
 
-express_color_list_file = open(f'static\\data\\express_color_list.json', 'r')
+express_color_list_file = open(f'//static//data//express_color_list.json', 'r')
 express_color_list = json.load(express_color_list_file)['colors']
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36', 
