@@ -16,8 +16,8 @@ from rich.console import Console
 
 import model
 
-print(os.path())
-print(os.listdir(os.path()))
+print(os.path.dirname(os.path.abspath(__file__)))
+print(os.listdir(os.path.dirname(os.path.abspath(__file__))))
 
 app = Flask('Fashion recommender', template_folder='template')
 app.wsgi_app = ProxyFix(
