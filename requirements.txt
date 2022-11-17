@@ -8,6 +8,7 @@ requests==2.27.1
 scikit_learn==1.1.1
 tensorflow-cpu==2.8.0
 protobuf==3.19
+rich
 django
 gunicorn
 django-heroku
